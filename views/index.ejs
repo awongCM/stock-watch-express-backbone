@@ -1,0 +1,133 @@
+<!-- TODO - use jade moving forth-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>US Stock Market Watch</title>
+    <link rel="stylesheet" href="stylesheets/main.css">
+  </head>
+  <body>
+      <section class="section">
+        <div class="container">
+          <h1 class="title is-1">US Stock Market Watch</h1>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="field is-horizontal">
+            <div class="field-body">
+              <div class="field" id="js-stocksdropdown">
+                <!-- Insert backbone template-->
+              </div>
+              <div class="field">
+                <div class="another-container">
+                  <div class="field">
+                    <label class="label">Download as</label>
+                    <p class="control">
+                      <span class="select is-medium">
+                        <select>
+                          <option>CSV</option>
+                          <option>JSON</option>
+                        </select>
+                      </span>
+                    </p>
+                  </div>
+                  <div class="field">
+                    <p class="control">
+                      <label class="checkbox">
+                        <input type="checkbox">
+                        Display them as table
+                      </label>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="field"><button class="button is-large is-primary">Submit</button></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <h1 class="title is-4"><%= title%></h1>
+          <table class="table">
+          <thead>
+            <tr>
+              <th><abbr title="Date">Date</abbr></th>
+              <th><abbr title="Open">Open</abbr></th>
+              <th><abbr title="High">High</abbr></th>
+              <th><abbr title="Low">Low</abbr></th>
+              <th><abbr title="Close">Close</abbr></th>
+              <th><abbr title="Volume">Volume</abbr></th>
+              <th><abbr title="Ex-dividend">Ex-Dividend</abbr></th>
+              <th><abbr title="Split Ratio">Split Ratio</abbr></th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th><abbr title="Date">Date</abbr></th>
+              <th><abbr title="Open">Open</abbr></th>
+              <th><abbr title="High">High</abbr></th>
+              <th><abbr title="Low">Low</abbr></th>
+              <th><abbr title="Close">Close</abbr></th>
+              <th><abbr title="Volume">Volume</abbr></th>
+              <th><abbr title="Ex-Dividend">Ex-Dividend</abbr></th>
+              <th><abbr title="Split Ratio">Split Ratio</abbr></th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <% for(let i = 0; i < stocks.length; i++) { %>
+              <tr>
+                <th><%= stocks[i]["Date"]%></th>
+                <td><%= stocks[i]["Open"]%></td>
+                <td><%= stocks[i]["High"]%></td>
+                <td><%= stocks[i]["Low"]%></td>
+                <td><%= stocks[i]["Close"]%></td>
+                <td><%= stocks[i]["Volume"]%></td>
+                <td><%= stocks[i]["Ex-Dividend"]%></td>
+                <td><%= stocks[i]["Split Ratio"]%></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- Underscore Templates -->
+      <script type="text/template" id="stockNamesDropdownView">
+        <label class="label">Available Stocks</label>
+        <p class="control">
+          <span class="select is-medium">
+            <select id="stockNamesSelector">
+              <option>Apple</option>
+              <option>Facebook</option>
+              <option>Amazon</option>
+              <option>Google</option>
+              <option>Microsoft</option>
+            </select>
+          </span>
+        </p>
+      </script>
+
+
+      <!-- Bower Assets -->
+      <script src="bower_components/jquery/dist/jquery.js"></script>
+    	<script src="bower_components/underscore/underscore-min.js"></script>
+    	<script src="bower_components/backbone/backbone-min.js"></script>
+
+      <!-- Non-Bower Assets -->
+      <script src="scripts/backbone-callbacks-min.js"></script>
+
+      <script src="scripts/models/stocksModel.js"></script>
+      <script src="scripts/collections/stocksCollections.js"></script>
+      <script src="scripts/views/stocksView.js"></script>
+      <script src="scripts/views/stocksTableView.js"></script>
+      <script src="scripts/views/stockNamesDropdownFilterView.js"></script>
+      <script src="scripts/app.js"></script>
+
+
+  </body>
+
+</html>

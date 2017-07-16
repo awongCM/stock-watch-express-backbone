@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>US Stock Market Watch</title>
+    <link rel="stylesheet" type="text/css" src="bower_components/bootstrap/dist/css/boostrap-theme.min.css">
+  </head>
+  <body>
+      <h1>Welcome to the Wiki Stock Exchange</h1>
+      <div id="stocks-app" class="stocks-container">Loading...</div>
+
+      
+    <!-- Bower Assets -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+  	<script src="bower_components/underscore/underscore-min.js"></script>
+  	<script src="bower_components/backbone/backbone-min.js"></script>
+
+    <!-- Non-Bower Assets -->
+    <script src="js/backbone-callbacks-min.js"></script>
+    <!-- app logic -->
+    <script defer src="models/stocksModel.js"></script>
+    <script defer src="collections/stocksCollections.js"></script>
+    <script defer src="views/stocksView.js"></script>
+    <script defer src="views/stocksTableView.js"></script>
+    <script defer src="controller/stocksController.js"></script>
+
+
+    <!-- templates -->
+
+    <!-- <script type="text/template" id="stocks-row-template">
+        <th scope="row"><%=id %></th>
+        <td><%=name %></td>
+        <td><%=description %></td>
+    </script>
+
+    <script type="text/template" id="stocks-table">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+
+    </script>
+
+    <script type="text/template" id="stock-init-template">
+      <h2>Content is</h2>
+        <p>
+          <%=datasets>
+        </p>
+    </script>
+
+    <script type="text/template">
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="#">Home</a></li>
+        <li role="presentation"><a href="#">Profile</a></li>
+        <li role="presentation"><a href="#">Messages</a></li>
+      </ul>
+      <div class="some class">
+        Foo bar
+      </div>
+    </script> -->
+  </body>
+
+</html>

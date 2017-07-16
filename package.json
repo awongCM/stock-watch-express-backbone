@@ -1,0 +1,45 @@
+{
+  "name": "stock-watch-express-backbone",
+  "version": "0.0.1",
+  "description": "Stock Watch App with Backbone/Express",
+  "main": "stockserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node stockserver.js",
+    "upload": "node csv_mongodb_upload.js",
+    "rest_api_call" : "node api_rest_call.js"
+  },
+  "keywords": [
+    "backbone",
+    "node",
+    "express",
+    "api",
+    "mongodb",
+    "bulma"
+  ],
+  "author": "Andy Wong",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "bulma": "^0.4.3",
+    "console.table": "^0.7.0",
+    "ejs": "^2.4.1",
+    "error-handler": "^1.0.0",
+    "express": "^4.13.4",
+    "fast-csv": "^2.4.0",
+    "fs": "0.0.1-security",
+    "method-override": "^2.3.6",
+    "moment": "^2.13.0",
+    "mongodb": "^2.2.30",
+    "mongonaut": "^3.0.0",
+    "mongoose": "^4.11.1",
+    "node-sass-middleware": "^0.11.0",
+    "pug": "^2.0.0-rc.2",
+    "quandl": "0.0.6",
+    "request": "^2.73.0",
+    "sass": "^1.0.0-beta.1"
+  },
+  "devDependencies": {
+    "backbone-callbacks": "^0.1.7"
+  }
+}

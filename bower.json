@@ -1,0 +1,31 @@
+{
+  "name": "stock-watch-express-backbone",
+  "version": "0.0.0",
+  "authors": [
+    "Andy Wong <awong.cm@gmail.com>"
+  ],
+  "main": "index.ejs",
+  "keywords": [
+    "backbone",
+    "node",
+    "express"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "underscore": "~1.8.3",
+    "backbone": "^1.3.3",
+    "bootstrap": "^3.3.6",
+    "jquery": "^3.1.0"
+  },
+  "resolutions": {
+    "jquery": "1.9.1 - 2"
+  }
+}
