@@ -97,13 +97,29 @@ MongoClient.connect(dbURI, function (err, database) {
   db = database;
 })
 
-app.get('/', function (req, res, next) {
-  db.collection('stocks').find().toArray(function (err, result) {
-    if (err) { return console.log(err);}
-    res.render('index', {title: 'Today\'s stocks for Apple ', stocks: result});
-  });
+//Fetching from Mongoose side
 
-});
+// app.get('/', function (req, res, next) {
+//   db.collection('stocks').find().toArray(function (err, result) {
+//     if (err) { return console.log(err);}
+//     res.render('index', {title: 'Today\'s stocks for Apple ', stocks: result});
+//   });
+
+// });
+
+//OR json endpoint
+app.get('/', function (req, res, next) {
+  quandlAPIServer.retrieveDataSet(function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      console.log(body);
+      let res_data = JSON.parse(body);
+      res.render('index', {title: res_data.dataset.name, column_names: res_data.dataset.column_names, stocks: res_data.dataset.data });
+     } else {
+      res.render('index', {title: "No data is available at this time", column_names: null, stocks: null });
+     }
+  })
+})
+
 
 app.listen(8080);
 console.log('Stock Watch API is running on port: 8080');

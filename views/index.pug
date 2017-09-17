@@ -36,51 +36,66 @@ html
         table.table
           thead
             tr
-              th
-                abbr(title='Date') Date
-              th
-                abbr(title='Open') Open
-              th
-                abbr(title='High') High
-              th
-                abbr(title='Low') Low
-              th
-                abbr(title='Close') Close
-              th
-                abbr(title='Volume') Volume
-              th
-                abbr(title='Ex-dividend') Ex-Dividend
-              th
-                abbr(title='Split Ratio') Split Ratio
+              //- th
+              //-   abbr(title='Date') Date
+              //- th
+              //-   abbr(title='Open') Open
+              //- th
+              //-   abbr(title='High') High
+              //- th
+              //-   abbr(title='Low') Low
+              //- th
+              //-   abbr(title='Close') Close
+              //- th
+              //-   abbr(title='Volume') Volume
+              //- th
+              //-   abbr(title='Ex-dividend') Ex-Dividend
+              //- th
+              //-   abbr(title='Split Ratio') Split Ratio
+              for column_name in column_names
+                th
+                  abbr(title=column_name) 
+                    =column_name
           tfoot
             tr
-              th
-                abbr(title='Date') Date
-              th
-                abbr(title='Open') Open
-              th
-                abbr(title='High') High
-              th
-                abbr(title='Low') Low
-              th
-                abbr(title='Close') Close
-              th
-                abbr(title='Volume') Volume
-              th
-                abbr(title='Ex-Dividend') Ex-Dividend
-              th
-                abbr(title='Split Ratio') Split Ratio
+              //- th
+              //-   abbr(title='Date') Date
+              //- th
+              //-   abbr(title='Open') Open
+              //- th
+              //-   abbr(title='High') High
+              //- th
+              //-   abbr(title='Low') Low
+              //- th
+              //-   abbr(title='Close') Close
+              //- th
+              //-   abbr(title='Volume') Volume
+              //- th
+              //-   abbr(title='Ex-Dividend') Ex-Dividend
+              //- th
+              //-   abbr(title='Split Ratio') Split Ratio
+              for column_name in column_names
+                th
+                  abbr(title=column_name) 
+                    =column_name
           tbody
             for stock in stocks
               tr
-                th= stock['Date']
-                td= stock['Open']
-                td= stock["High"]
-                td= stock["Low"]
-                td= stock["Close"]
-                td= stock["Volume"]
-                td= stock["Ex-Dividend"]
-                td= stock["Split Ratio"]
+                //- th= stock['Date']
+                //- td= stock['Open']
+                //- td= stock["High"]
+                //- td= stock["Low"]
+                //- td= stock["Close"]
+                //- td= stock["Volume"]
+                //- td= stock["Ex-Dividend"]
+                //- td= stock["Split Ratio"]
+                each val, index in stock
+                  if index === 0
+                    th= val
+                  else
+                    td= val.toFixed(2) 
+                  
+                
     //- Underscore Templates
     script#stockNamesDropdownView(type='text/template').
       <label class="label">Available Stocks</label>
