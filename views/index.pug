@@ -1,5 +1,109 @@
+doctype html
 html
   head
-    title= title
+    meta(charset='utf-8')
+    title US Stock Market Watch
+    link(rel='stylesheet', href='stylesheets/main.css')
   body
-    h1= title
+    section.section
+      .container
+        h1.title.is-1 US Stock Market Watch
+    section.section
+      .container
+        .field.is-horizontal
+          .field-body
+            #js-stocksdropdown.field
+              // Insert backbone template
+            .field
+              .another-container
+                .field
+                  label.label Download as
+                  p.control
+                    span.select.is-medium
+                      select
+                        option CSV
+                        option JSON
+                .field
+                  p.control
+                    label.checkbox
+                      input(type='checkbox')
+                      |                         Display them as table
+        .field
+          button.button.is-large.is-primary Submit
+    section.section
+      .container
+        h1.title.is-4= title
+        table.table
+          thead
+            tr
+              th
+                abbr(title='Date') Date
+              th
+                abbr(title='Open') Open
+              th
+                abbr(title='High') High
+              th
+                abbr(title='Low') Low
+              th
+                abbr(title='Close') Close
+              th
+                abbr(title='Volume') Volume
+              th
+                abbr(title='Ex-dividend') Ex-Dividend
+              th
+                abbr(title='Split Ratio') Split Ratio
+          tfoot
+            tr
+              th
+                abbr(title='Date') Date
+              th
+                abbr(title='Open') Open
+              th
+                abbr(title='High') High
+              th
+                abbr(title='Low') Low
+              th
+                abbr(title='Close') Close
+              th
+                abbr(title='Volume') Volume
+              th
+                abbr(title='Ex-Dividend') Ex-Dividend
+              th
+                abbr(title='Split Ratio') Split Ratio
+          tbody
+            for stock in stocks
+              tr
+                th= stock['Date']
+                td= stock['Open']
+                td= stock["High"]
+                td= stock["Low"]
+                td= stock["Close"]
+                td= stock["Volume"]
+                td= stock["Ex-Dividend"]
+                td= stock["Split Ratio"]
+    //- Underscore Templates
+    script#stockNamesDropdownView(type='text/template').
+      <label class="label">Available Stocks</label>
+      <p class="control">
+      <span class="select is-medium">
+      <select id="stockNamesSelector">
+      <option>Apple</option>
+      <option>Facebook</option>
+      <option>Amazon</option>
+      <option>Google</option>
+      <option>Microsoft</option>
+      </select>
+      </span>
+      </p>
+    // Bower Assets
+    script(src='bower_components/jquery/dist/jquery.js')
+    script(src='bower_components/underscore/underscore-min.js')
+    script(src='bower_components/backbone/backbone-min.js')
+    // Non-Bower Assets
+    script(src='scripts/backbone-callbacks-min.js')
+    script(src='scripts/models/stocksModel.js')
+    script(src='scripts/collections/stocksCollections.js')
+    script(src='scripts/views/stocksView.js')
+    script(src='scripts/views/stocksTableView.js')
+    script(src='scripts/views/stockNamesDropdownFilterView.js')
+    script(src='scripts/app.js')

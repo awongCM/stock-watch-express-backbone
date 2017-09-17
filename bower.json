@@ -4,7 +4,7 @@
   "authors": [
     "Andy Wong <awong.cm@gmail.com>"
   ],
-  "main": "index.ejs",
+  "main": "index.pug",
   "keywords": [
     "backbone",
     "node",

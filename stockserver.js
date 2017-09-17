@@ -7,7 +7,7 @@ var express = require('express'),
     errorHandler = require('error-handler'),
     https = require('https'),
     path = require('path'),
-    ejs = require('ejs'), //TODO
+    pug = require('pug'),
     quandlAPIServer = require('./quandlAPIServer'),
     moment = require('moment'),
     sassMiddleWare = require('node-sass-middleware'),
@@ -22,7 +22,7 @@ var dbURI = 'mongodb://localhost/stock-watch',
 var app = express();
 
 app.set('views', path.join(__dirname, '/views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'pug');
 
 app.use(sassMiddleWare({
     src: path.join(__dirname, '/sass') ,
