@@ -2,15 +2,30 @@
 
 const request = require('request');
 
-let quandlAPIServerCall = {
-	uri: "https://www.quandl.com/api/v3/datasets/WIKI/GOOGL/data.json",
-	qs: {
-		api_key: '_6uS2usoj9fz6kBLWbiw'
-	}
+let qsOpts = {
+    api_key: '_6uS2usoj9fz6kBLWbiw',
+    order: 'desc',
+    collapse: 'quarterly',
+    start_date: '1997-01-01',
+    end_date: '2017-07-01'
+}
+
+//Timeseries API
+let quandlAPIServerCallTS = {
+  json: {
+    uri: "https://www.quandl.com/api/v3/datasets/WIKI/AAPL.json",
+    qs: qsOpts
+  },
+  //TODO:
+  csv : {
+    uri: "https://www.quandl.com/api/v3/datasets/WIKI/AAPL.csv",
+    qs: qsOpts
+  }
+  
 }
 
 exports.retrieveDataSet = function(callback) {
-  request.get(quandlAPIServerCall, function(err, response, body){
+  request.get(quandlAPIServerCallTS.json, function(err, response, body){
   	if(err) {
         callback(err, null, null);
     }
