@@ -6,11 +6,11 @@ var nodemon = require('gulp-nodemon');
 var sass = require('gulp-sass');
 
 gulp.task('default', ['sass'], function () {
-	gulp.watch(['./sass/main.scss'], ['sass']);
+	gulp.watch(['./sass/main.sass'], ['sass']);
 });
 
 gulp.task('sass', ['browser-sync'], function () {
-	return gulp.src('./sass/main.scss')
+	return gulp.src('./sass/main.sass')
 		.pipe(sass({
 			sourceMapEmbed: true,
       		outputStyle: 'compressed'
