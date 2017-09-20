@@ -1,6 +1,8 @@
 var stockApp  = stockApp || {};
 
 (() => {
-  'use strict';
-  new stockApp.stockNamesDropdownView();
+  
+  new stockApp.stocksDropDownView();
+
+
 })();

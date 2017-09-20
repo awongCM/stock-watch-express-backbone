@@ -5,7 +5,7 @@ html
     title US Stock Market Watch
     link(rel='stylesheet', href='stylesheets/main.css')
   body
-    section.section
+    section.section.section-heading
       .container
         h1.title.is-1 US Stock Market Watch
     section.section
@@ -100,25 +100,30 @@ html
     script#stockNamesDropdownView(type='text/template').
       <label class="label">Available Stocks</label>
       <p class="control">
-      <span class="select is-medium">
-      <select id="stockNamesSelector">
-      <option>Apple</option>
-      <option>Facebook</option>
-      <option>Amazon</option>
-      <option>Google</option>
-      <option>Microsoft</option>
-      </select>
-      </span>
+        <span class="select is-medium">
+          <select id="stockNamesSelector"></select>
+        </span>
       </p>
+    
+    script#optionitem-template(type="text/template").
+      <option value=<%- key %>><%- value %></option>
+      
+      
+      
     // Bower Assets
     script(src='bower_components/jquery/dist/jquery.js')
     script(src='bower_components/underscore/underscore-min.js')
     script(src='bower_components/backbone/backbone-min.js')
+
     // Non-Bower Assets
     script(src='scripts/backbone-callbacks-min.js')
+    script(src='scripts/backbone.localstorage.min.js')
+    script(src='scripts/models/stocksDropDownModel.js')
     script(src='scripts/models/stocksModel.js')
     script(src='scripts/collections/stocksCollections.js')
+    script(src='scripts/collections/stocksDropDownCollection.js')
     script(src='scripts/views/stocksView.js')
     script(src='scripts/views/stocksTableView.js')
-    script(src='scripts/views/stockNamesDropdownFilterView.js')
+    script(src='scripts/views/stocksDropDownView.js')
+    script(src='scripts/views/stocksDropDownOptionView.js')
     script(src='scripts/app.js')
