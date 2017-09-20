@@ -23,14 +23,6 @@ var app = express();
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'pug');
 
-// //??
-// app.use( sassMiddleWare({
-//     src: path.join(__dirname, '/sass') ,
-//     dest: path.join(__dirname, '/public/stylesheets'),
-//     debug: true
-//   })
-// );
-
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.use('/bower_components', express.static(path.join(__dirname , '/bower_components')));
