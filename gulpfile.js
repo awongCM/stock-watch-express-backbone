@@ -1,24 +1,23 @@
 'use strict';
 
-var gulp = require('gulp');
-var browserSync = require('browser-sync');
-var nodemon = require('gulp-nodemon');
-var sass = require('gulp-sass');
+const gulp = require('gulp');
+const browserSync = require('browser-sync');
+const nodemon = require('gulp-nodemon');
+const sass = require('gulp-sass');
 
-gulp.task('default', ['sass'], function () {
+gulp.task('default', ['sass'], () => {
 	gulp.watch(['./sass/main.sass'], ['sass']);
 });
 
-gulp.task('sass', ['browser-sync'], function () {
-	return gulp.src('./sass/main.sass')
+gulp.task('sass', ['browser-sync'], () => 
+	gulp.src('./sass/main.sass')
 		.pipe(sass({
 			sourceMapEmbed: true,
-      		outputStyle: 'compressed'
+			outputStyle: 'compressed'
 		}).on('error', sass.logError))
-		.pipe(gulp.dest('./public/stylesheets'))
-})
+		.pipe(gulp.dest('./public/stylesheets')))
 
-gulp.task('browser-sync', ['nodaemon'], function () {
+gulp.task('browser-sync', ['nodaemon'], () => {
     browserSync.init(null, {
         proxy: "http://localhost:8080",
         files: ["public/**/*.*"],
@@ -26,12 +25,12 @@ gulp.task('browser-sync', ['nodaemon'], function () {
     });
 });
 
-gulp.task('nodaemon', function () {
-    var started = false;
+gulp.task('nodaemon', () => {
+    let started = false;
 	
 	return nodemon({
 		script: 'scripts/app.js'
-	}).on('start', function () {
+	}).on('start', () => {
 		if (!started) {
 			cb();
 			started = true; 

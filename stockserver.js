@@ -1,24 +1,24 @@
 'use strict';
 
 // Express Server
-var express = require('express'),
-    bodyParser = require('body-parser'),
-    methodOverride = require('method-override'),
-    errorHandler = require('error-handler'),
-    https = require('https'),
-    path = require('path'),
-    pug = require('pug'),
-    quandlAPIServer = require('./quandlAPIServer'),
-    moment = require('moment'),
-    mongoose = require('mongoose'),
-    MongoClient = require('mongodb').MongoClient,
-    Mongonaut = require('mongonaut');
+const express = require('express'),
+      bodyParser = require('body-parser'),
+      methodOverride = require('method-override'),
+      errorHandler = require('error-handler'),
+      https = require('https'),
+      path = require('path'),
+      pug = require('pug'),
+      quandlAPIServer = require('./quandlAPIServer'),
+      moment = require('moment'),
+      mongoose = require('mongoose'),
+      MongoClient = require('mongodb').MongoClient,
+      Mongonaut = require('mongonaut');
 
-var dbURI = 'mongodb://localhost/stock-watch',
-    mongoStock = new Mongonaut({'db': 'stock-watch','collection': 'stocks'}),
-    db;
+const dbURI = 'mongodb://localhost/stock-watch';
+const mongoStock = new Mongonaut({'db': 'stock-watch','collection': 'stocks'});
+let db;
 
-var app = express();
+const app = express();
 
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'pug');
@@ -52,8 +52,8 @@ mongoose.connect(dbURI);
 let csvimporturl = './apple-stock.csv';
 
 // When successfully connected
-mongoose.connection.on('connected', function () {
-  console.log('Mongoose default connection open to ' + dbURI);
+mongoose.connection.on('connected', () => {
+  console.log(`Mongoose default connection open to ${dbURI}`);
   //import csv here
   mongoStock.import(csvimporturl).then((response) => {
     console.log('csv import successful!', response);
@@ -64,17 +64,17 @@ mongoose.connection.on('connected', function () {
 });
 
 // If the connection throws an error
-mongoose.connection.on('error',function (err) {
-  console.log('Mongoose default connection error: ' + err);
+mongoose.connection.on('error', err => {
+  console.log(`Mongoose default connection error: ${err}`);
 });
 
 // When the connection is disconnected
-mongoose.connection.on('disconnected', function () {
+mongoose.connection.on('disconnected', () => {
   console.log('Mongoose default connection disconnected');
 });
 
 // If the Node process ends, close the Mongoose connection
-process.on('SIGINT', function() {
+process.on('SIGINT', () => {
   console.log('ended');
 
   mongoose.connection.db.dropDatabase(() => {console.log("db dropped")});
@@ -84,7 +84,7 @@ process.on('SIGINT', function() {
 });
 
 //MongooseClient
-MongoClient.connect(dbURI, function (err, database) {
+MongoClient.connect(dbURI, (err, database) => {
   if (err) { return console.log(err);}
   db = database;
 })
@@ -100,8 +100,8 @@ MongoClient.connect(dbURI, function (err, database) {
 // });
 
 //OR json endpoint
-app.get('/', function (req, res, next) {
-  quandlAPIServer.retrieveDataSet(function (error, response, body) {
+app.get('/', (req, res, next) => {
+  quandlAPIServer.retrieveDataSet((error, response, body) => {
     if (!error && response.statusCode === 200) {
       console.log(body);
       let res_data = JSON.parse(body);

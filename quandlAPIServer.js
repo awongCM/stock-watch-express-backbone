@@ -25,7 +25,7 @@ let quandlAPIServerCallTS = {
 }
 
 exports.retrieveDataSet = function(callback) {
-  request.get(quandlAPIServerCallTS.json, function(err, response, body){
+  request.get(quandlAPIServerCallTS.json, (err, response, body) => {
   	if(err) {
         callback(err, null, null);
     }
