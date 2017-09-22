@@ -112,6 +112,38 @@ app.get('/', (req, res, next) => {
   })
 })
 
+app.get('/api/stocks/', (req, res, next) => {
+  let params = {
+      stock_id: req.query.stock_id,
+      download_type: req.query.download_type,
+      is_table: req.query.is_table
+  };
+
+  quandlAPIServer.fetchDataSetByQuery(params, (err, response, body)=> {
+      if (!err && response.statusCode === 200) {
+        console.log("body: ", body);
+
+        if (typeof body ==='object') {
+          let response_data = JSON.parse(body);
+          // res.render('index', {title: res_data.dataset.name, column_names: res_data.dataset.column_names, stocks: res_data.dataset.data });
+          // console.log(response_data.quandl_error);
+          res.json(response_data);
+        
+        }
+        else {
+          res.setHeader('Content-disposition', 'attachment; filename=testing.csv');
+          res.set('Content-Type', 'text/csv');
+          res.status(200).send(body);
+        }
+
+          
+      } else {
+        // res.render('index', {title: "No data is available at this time", column_names: null, stocks: null });
+        res.json({message: "Couldn't process data from BE at this time"});
+      }
+  });
+
+});
 
 app.listen(8080);
 console.log('Stock Watch API is running on port: 8080');

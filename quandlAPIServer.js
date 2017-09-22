@@ -20,6 +20,11 @@ let quandlAPIServerCallTS = {
   csv : {
     uri: "https://www.quandl.com/api/v3/datasets/WIKI/AAPL.csv",
     qs: qsOpts
+  },
+  default: {
+    base: "https://www.quandl.com/api/v3/datasets/WIKI/",
+    uri: "",
+    qs: qsOpts
   }
   
 }
@@ -34,3 +39,20 @@ exports.retrieveDataSet = function(callback) {
     }
   });
 }
+
+exports.fetchDataSetByQuery = function(params, callback) {
+  
+  quandlAPIServerCallTS.default.uri = `${quandlAPIServerCallTS.default.base}/${params.stock_id}.${params.download_type}`;
+  
+  request.get(quandlAPIServerCallTS.default, (err, response, body) => {
+    if(err) {
+        callback(err, null, null);
+    }
+    else if(response !== null) {
+        callback(null, response, body);
+    }
+  });
+
+  
+}
+
