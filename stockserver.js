@@ -89,7 +89,8 @@ MongoClient.connect(dbURI, (err, database) => {
   db = database;
 })
 
-//Fetching from Mongoose side
+//TODO - offline access 
+//Fetching from Mongoose side 
 
 // app.get('/', function (req, res, next) {
 //   db.collection('stocks').find().toArray(function (err, result) {
@@ -101,15 +102,8 @@ MongoClient.connect(dbURI, (err, database) => {
 
 //OR json endpoint
 app.get('/', (req, res, next) => {
-  quandlAPIServer.retrieveDataSet((error, response, body) => {
-    if (!error && response.statusCode === 200) {
-      console.log(body);
-      let res_data = JSON.parse(body);
-      res.render('index', {title: res_data.dataset.name, column_names: res_data.dataset.column_names, stocks: res_data.dataset.data });
-     } else {
-      res.render('index', {title: "No data is available at this time", column_names: null, stocks: null });
-     }
-  })
+  //TODO - to use front end template
+  res.render('index', {title: "", stocks: null});
 })
 
 app.get('/api/stocks/', (req, res, next) => {
@@ -121,24 +115,28 @@ app.get('/api/stocks/', (req, res, next) => {
 
   quandlAPIServer.fetchDataSetByQuery(params, (err, response, body)=> {
       if (!err && response.statusCode === 200) {
-        console.log("body: ", body);
-
-        if (typeof body ==='object') {
-          let response_data = JSON.parse(body);
-          // res.render('index', {title: res_data.dataset.name, column_names: res_data.dataset.column_names, stocks: res_data.dataset.data });
-          // console.log(response_data.quandl_error);
-          res.json(response_data);
         
+        var response_data, is_valid_json;
+
+        //try catch error for parsing JSON
+        try {
+          response_data = JSON.parse(body);
+          is_valid_json = true;
+        } catch (error) {
+          // TODO - assuming for now it is valid csv format
+          response_data = body;
+          is_valid_json = false;
         }
-        else {
+
+        if (is_valid_json) {
+          res.json({title: response_data.dataset.name, column_names: response_data.dataset.column_names, stocks: response_data.dataset.data });
+        } else {
           res.setHeader('Content-disposition', 'attachment; filename=testing.csv');
           res.set('Content-Type', 'text/csv');
-          res.status(200).send(body);
+          res.status(200).send(response_data);
         }
-
-          
+                  
       } else {
-        // res.render('index', {title: "No data is available at this time", column_names: null, stocks: null });
         res.json({message: "Couldn't process data from BE at this time"});
       }
   });

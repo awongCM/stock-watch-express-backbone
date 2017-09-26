@@ -15,16 +15,16 @@ var stockApp = stockApp || {};
 		},
 
 		events: {
-			"change #stockNamesSelector": "stockNamesSelected"
+			"change #stock_id": "stockNamesSelected"
 		},
 
 		stockNamesSelected: function () {
-			alert("You selected a stock!");
+			console.log("You selected a stock!");
 		},
 
 		addDropDownOption: function(stocksDropDownModel) {
 			let view = new stockApp.stocksDropDownOptionView({model: stocksDropDownModel});
-			$('#stockNamesSelector').append(view.render().el);
+			$('#stock_id').append(view.render().el);
 		},
 
 		render: function () {

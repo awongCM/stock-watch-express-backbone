@@ -9,7 +9,7 @@ html
       .container
         h1.title.is-1 US Stock Market Watch
     section.section
-      .container.form-container
+      form.container.form-container#form-container
         .field.is-horizontal
           .field-body
             #js-stocksdropdown.field
@@ -20,60 +20,30 @@ html
                   label.label Download as
                   p.control
                     span.select.is-medium
-                      select
-                        option CSV
-                        option JSON
+                      select(name="download_type" id="download_type")
+                        option(value="csv") CSV
+                        option(value="json") JSON
                 .field
                   p.control
                     label.checkbox
-                      input(type='checkbox')
+                      input(type='checkbox' name='is_table' id='is_table')
                       |                         Display them as table
         .field
-          button.button.is-large.is-primary Submit
+          button.button.is-large.is-primary(type="button" name="submit_button" id="submit_button") Submit
     section.section
       .container
+      //-TODO - for front end template
+      if stocks !== null
         h1.title.is-4= title
         table.table
           thead
             tr
-              //- th
-              //-   abbr(title='Date') Date
-              //- th
-              //-   abbr(title='Open') Open
-              //- th
-              //-   abbr(title='High') High
-              //- th
-              //-   abbr(title='Low') Low
-              //- th
-              //-   abbr(title='Close') Close
-              //- th
-              //-   abbr(title='Volume') Volume
-              //- th
-              //-   abbr(title='Ex-dividend') Ex-Dividend
-              //- th
-              //-   abbr(title='Split Ratio') Split Ratio
               for column_name in column_names
                 th
                   abbr(title=column_name) 
                     =column_name
           tfoot
             tr
-              //- th
-              //-   abbr(title='Date') Date
-              //- th
-              //-   abbr(title='Open') Open
-              //- th
-              //-   abbr(title='High') High
-              //- th
-              //-   abbr(title='Low') Low
-              //- th
-              //-   abbr(title='Close') Close
-              //- th
-              //-   abbr(title='Volume') Volume
-              //- th
-              //-   abbr(title='Ex-Dividend') Ex-Dividend
-              //- th
-              //-   abbr(title='Split Ratio') Split Ratio
               for column_name in column_names
                 th
                   abbr(title=column_name) 
@@ -81,14 +51,6 @@ html
           tbody
             for stock in stocks
               tr
-                //- th= stock['Date']
-                //- td= stock['Open']
-                //- td= stock["High"]
-                //- td= stock["Low"]
-                //- td= stock["Close"]
-                //- td= stock["Volume"]
-                //- td= stock["Ex-Dividend"]
-                //- td= stock["Split Ratio"]
                 each val, index in stock
                   if index === 0
                     th= val
@@ -101,7 +63,7 @@ html
       <label class="label">Available Stocks</label>
       <p class="control">
         <span class="select is-medium">
-          <select id="stockNamesSelector"></select>
+          <select name="stock_id" id="stock_id"></select>
         </span>
       </p>
     
@@ -126,4 +88,5 @@ html
     script(src='scripts/views/stocksTableView.js')
     script(src='scripts/views/stocksDropDownView.js')
     script(src='scripts/views/stocksDropDownOptionView.js')
+    script(src='scripts/views/stocksFormView.js')
     script(src='scripts/app.js')
