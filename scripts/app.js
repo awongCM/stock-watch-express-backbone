@@ -1,8 +1,8 @@
 var stockApp  = stockApp || {};
 
 (() => {
-  
   new stockApp.stocksDropDownView();
   new stockApp.stocksFormView();
-  new stockApp.stocksModel();
+  stockApp.stocksModel_instance = new stockApp.stocksModel();
+  new stockApp.stocksTableView({model: stockApp.stocksModel_instance});
 })();

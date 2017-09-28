@@ -31,33 +31,8 @@ html
         .field
           button.button.is-large.is-primary(type="button" name="submit_button" id="submit_button") Submit
     section.section.section-table
-      .container.table-container
-      //-TODO - for front end template
-      if stocks !== null
-        h1.title.is-4= title
-        table.table
-          thead
-            tr
-              for column_name in column_names
-                th
-                  abbr(title=column_name) 
-                    =column_name
-          tfoot
-            tr
-              for column_name in column_names
-                th
-                  abbr(title=column_name) 
-                    =column_name
-          tbody
-            for stock in stocks
-              tr
-                each val, index in stock
-                  if index === 0
-                    th= val
-                  else
-                    td= val.toFixed(2) 
-                  
-                
+      .container.table-container#table-container
+                            
     //- Underscore Templates
     script#stockNamesDropdownView(type='text/template').
       <label class="label">Available Stocks</label>

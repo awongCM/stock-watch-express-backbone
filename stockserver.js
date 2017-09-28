@@ -101,8 +101,7 @@ MongoClient.connect(dbURI, (err, database) => {
 // });
 
 app.get('/', (req, res, next) => {
-  //TODO - to use front end template
-  res.render('index', {title: "", stocks: null});
+  res.render('index');
 })
 
 app.get('/api/stocks/', (req, res, next) => {

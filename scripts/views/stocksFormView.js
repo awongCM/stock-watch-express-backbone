@@ -3,14 +3,12 @@ var stockApp = stockApp || {};
 (($) => {
 	stockApp.stocksFormView = Backbone.View.extend({
         el: "#form-container",
-        template:  _.template($('#stocksTableView').html()),
         events: {
             "click #submit_button": "submitButton"
         },
         submitButton: function(e){
             console.log("button submitted");
-            //TODO - ajax methods for other tabl view
-            var self = this;
+
             e.preventDefault();
             $.ajax({
                 url: "/api/stocks/",
@@ -19,19 +17,14 @@ var stockApp = stockApp || {};
                     download_type: $("#download_type").val(),
                     is_table: false
                 },
-                success: function(response){
-                    // console.log("Success!", response);
-                    stockApp.stocksModel = response;
-                    console.log("Success", stockApp.stocksModel);
-                    self.render();
+                success: function(response) {
+                    stockApp.stocksModel_instance.set({title: response.title, column_names: response.column_names, stocks: response.stocks });
+                    console.log("Success",  stockApp.stocksModel_instance);
                 },
                 error: function(xhr){
                     console.log("Failure!", xhr);
                 }
             })
-        },
-        render: function() {
-            $('.table-container').html(this.template(stockApp.stocksModel));
         }
 	})
 })(jQuery);

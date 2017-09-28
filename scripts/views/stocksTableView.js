@@ -1,46 +1,22 @@
-// TODO: 
-
 var stockApp = stockApp || {};
 
 (($) => {
-  stockApp.StocksTableView = Backbone.View.extend({
-      el: "#table",
-      className: "table",
-      // template: _.template($('#stocks-table').html()),
-      collection: {},
+  stockApp.stocksTableView = Backbone.View.extend({
+    el: "#table-container",
+    template: _.template($('#stocksTableView').html()),
+    initialize: function () {
+        var self = this;
+        this.listenTo(this.model, 'change', this.onModelChange);
 
-      initialize: function () {
-          var self = this;
-
-          this.collection = new StocksCollection();
-          this.listenTo(this.collection, 'reset change', this.render)
-
-          this.collection.fetch(function(error, response){
-              if(error){
-                  console.log("Error", error);
-              }
-              else{
-                  console.log("Our Response(StocksTableView) is... ", response);
-                  that.render();
-              }
-          });
-
-      },
-
-      render: function () {
-          var that = this;
-
-          _.each(this.collection.models, function (item) {
-              that.renderRow(item);
-          }, this);
-
-          $('#stocks-app').html(this.$el.html());
-      },
-
-      renderRow: function (item) {
-          var stocksView = new StocksView({model: item});
-          this.$el.append(stocksView.render().el);
-      }
+    },
+    onModelChange: function(model, value) {
+        console.log('detect model changed', model);
+        this.render();
+    },
+    render: function() {
+        this.$el.html(this.template(this.model.toJSON()));
+        return this;
+    }
   });
 
 })(jQuery);
