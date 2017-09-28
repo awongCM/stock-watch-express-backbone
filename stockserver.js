@@ -114,7 +114,7 @@ app.get('/api/stocks/', (req, res, next) => {
   quandlAPIServer.fetchDataSetByQuery(params, (err, response, body)=> {
       if (!err && response.statusCode === 200) {
         
-        var response_data, is_valid_json;
+        let response_data, is_valid_json, attachment_prefix;
 
         //try catch error for parsing JSON
         try {
@@ -124,12 +124,13 @@ app.get('/api/stocks/', (req, res, next) => {
           // TODO - assuming for now it is valid csv format
           response_data = body;
           is_valid_json = false;
+          attachment_prefix = params.stock_id;
         }
 
         if (is_valid_json) {
           res.json({title: response_data.dataset.name, column_names: response_data.dataset.column_names, stocks: response_data.dataset.data });
         } else {
-          res.setHeader('Content-disposition', 'attachment; filename=testing.csv');
+          res.setHeader('Content-Disposition', 'attachment; filename='+attachment_prefix+'.csv');
           res.set('Content-Type', 'text/csv');
           res.status(200).send(response_data);
         }
