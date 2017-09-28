@@ -30,22 +30,6 @@ app.use('/bower_components', express.static(path.join(__dirname , '/bower_compon
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-// router.get('/', function(req,res){
-//
-//   quandlAPIServer.retrieveDataSet(function(error, data){
-//     if(error){
-//         console.log(error);
-//         res.send(error);
-//     }
-//     else{
-//         console.log('Found data');
-//         //res.json(JSON.parse(data));
-//         res.render('index');
-//     }
-//   });
-// });
-//
-
 //Mongoose Events
 mongoose.connect(dbURI);
 
