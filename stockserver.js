@@ -100,7 +100,6 @@ MongoClient.connect(dbURI, (err, database) => {
 
 // });
 
-//OR json endpoint
 app.get('/', (req, res, next) => {
   //TODO - to use front end template
   res.render('index', {title: "", stocks: null});
