@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node stockserver.js",
     "upload": "node csv_mongodb_upload.js",
+    "gulpify": "gulp",
     "rest_api_call": "node api_rest_call.js"
   },
   "keywords": [
