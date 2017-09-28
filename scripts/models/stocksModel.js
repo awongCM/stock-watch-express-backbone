@@ -1,11 +1,7 @@
-// TODO:
+var stockApp = stockApp || {};
 
-// var StocksModel = Backbone.Model.extend({
-// 	defaults:{
-// 		id: "0",
-// 		name: "null",
-// 		description: "null"
-// 	}
-// 	,
-// 	url: "http://localhost:8080/wiki-stocks"
-// });
+stockApp.stocksModel = Backbone.Model.extend({
+    title: "",
+    column_names: [],
+    stocks: []
+});

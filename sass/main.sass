@@ -1,9 +1,15 @@
 @import "../node_modules/bulma/bulma.sass"
 
-.section-heading
-  padding-bottom: 0
-
-.form-container 
+.section
+  &.section-heading
+    padding-bottom: 0
+  &.section-table
+    padding: 0 40px
+  
+.form-container,
+.table-container 
   border: 1px solid green
   padding: 20px 40px
   
+.table-container:empty
+  display: none

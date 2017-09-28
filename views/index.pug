@@ -21,8 +21,8 @@ html
                   p.control
                     span.select.is-medium
                       select(name="download_type" id="download_type")
-                        option(value="csv") CSV
                         option(value="json") JSON
+                        option(value="csv") CSV                     
                 .field
                   p.control
                     label.checkbox
@@ -30,8 +30,8 @@ html
                       |                         Display them as table
         .field
           button.button.is-large.is-primary(type="button" name="submit_button" id="submit_button") Submit
-    section.section
-      .container
+    section.section.section-table
+      .container.table-container
       //-TODO - for front end template
       if stocks !== null
         h1.title.is-4= title
@@ -69,7 +69,42 @@ html
     
     script#optionitem-template(type="text/template").
       <option value=<%- key %>><%- value %></option>
-      
+
+    script#stocksTableView(type="text/template").
+      <h1 class="title is-4"><%- title %></h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <% _.each(column_names, function(column_name) { %> 
+                <th>
+                  <abbr title=<%= column_name %>><%= column_name %></abbr>
+                </th>
+            <% }); %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <% _.each(column_names, function(column_name) { %> 
+                <th>
+                  <abbr title=<%= column_name %>><%= column_name %></abbr>
+                </th>
+            <% }); %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% _.each(stocks, function(stock) { %> 
+                <tr>
+                  <% _.each(stock, function(val, index) { %> 
+                    <% if (index === 0) { %>
+                      <th><%= val %></th>
+                    <% } else { %>
+                      <td><%= val.toFixed(2) %></td>
+                    <% } %>
+                  <% }); %>
+                </tr>
+            <% }); %>
+        </tbody>
+      </table>  
       
       
     // Bower Assets
