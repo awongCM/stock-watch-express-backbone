@@ -7,18 +7,19 @@ var stockApp = stockApp || {};
             "click #submit_button": "submitButton"
         },
         submitButton: function(e){
-            console.log("button submitted");
-
             e.preventDefault();
-            //TODO - more work 
+            
             let check_download_type =  $("#download_type").val();
 
-            if (check_download_type === "csv") {
+            let is_table_checked = $("#is_table").is(":checked");
+
+            if (!is_table_checked) {
                 //straight download request
+
                 let uri = "/api/stocks/",
                     stock_id = $("#stock_id").val();
 
-                window.location.href = uri + "?stock_id=" + stock_id + "&download_type=csv&is_table=false";
+                window.location.href = uri + "?stock_id=" + stock_id + "&download_type=" + check_download_type + "&is_table=false";
 
             } else {
                 //ajax call
@@ -28,8 +29,8 @@ var stockApp = stockApp || {};
                     type: "GET",
                     data: {
                         stock_id: $("#stock_id").val(),
-                        download_type: $("#download_type").val(),
-                        is_table: false
+                        download_type: 'json',
+                        is_table: true
                     },
                     success: function(response) {                    
                         stockApp.stocksModel_instance.set({title: response.title, column_names: response.column_names, stocks: response.stocks });

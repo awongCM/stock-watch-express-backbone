@@ -98,7 +98,10 @@ app.get('/api/stocks/', (req, res, next) => {
   quandlAPIServer.fetchDataSetByQuery(params, (err, response, body)=> {
       if (!err && response.statusCode === 200) {
         
-        let response_data, is_valid_json, attachment_prefix;
+        let response_data, is_valid_json, attachment_prefix, download_type_suffix, display_as_table;
+
+        download_type_suffix = params.download_type;
+        display_as_table = params.is_table;
 
         //try catch error for parsing JSON
         try {
@@ -111,12 +114,19 @@ app.get('/api/stocks/', (req, res, next) => {
           attachment_prefix = params.stock_id;
         }
 
-        if (is_valid_json) {
+        if (is_valid_json && display_as_table) {
           res.json({title: response_data.dataset.name, column_names: response_data.dataset.column_names, stocks: response_data.dataset.data });
         } else {
-          res.setHeader('Content-Disposition', 'attachment; filename='+attachment_prefix+'.csv');
-          res.set('Content-Type', 'text/csv');
-          res.status(200).send(response_data);
+          //handling raw file types from server
+          res.setHeader('Content-Disposition', 'attachment; filename='+attachment_prefix+'.'+download_type_suffix);
+
+          if (download_type_suffix === 'json') {
+            res.set('Content-Type', 'application/json');  
+            res.status(200).send(JSON.stringify(response_data));
+          } else {
+            res.set('Content-Type', 'text/csv');
+            res.status(200).send(response_data);
+          }
         }
                   
       } else {
