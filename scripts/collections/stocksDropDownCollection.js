@@ -2,16 +2,30 @@ var stockApp = stockApp || {};
 
 stockApp.stocksDropDownCollection = Backbone.Collection.extend({
     model: stockApp.stocksDropDownModel,
-    localStorage: new Backbone.LocalStorage('stocksDropDownCollection-localstorage')
+    // TODO
+    // localStorage: new Backbone.LocalStorage('stocksDropDownCollection-localstorage'),
+
+    url: "/api/available-stocks",
+
+    initialize: function() {
+        this.fetch({ success: this.onSuccessHandler, error: this.onErrorHandler});
+    },
+
+    onErrorHandler: function(collection, response) {
+        console.log('Error response', response);
+        console.log('Error collection', collection);
+
+        //return a empty collection
+        collection.models = [];
+    },
+
+    onSuccessHandler: function(collection, response) {
+        
+        console.log("Success response", response);
+        console.log("Success collection", collection);
+        
+        //overwrite collection models with our custom model
+        collection.models = response.available_stocks;
+
+    }
 });
-
-
-//instantiate collection list
-stockApp.stocksDropDownList = new stockApp.stocksDropDownCollection();
-
-stockApp.stocksDropDownList.add(new stockApp.stocksDropDownModel({key: "AAPL", value:"Apple"}));
-stockApp.stocksDropDownList.add(new stockApp.stocksDropDownModel({key: "FB", value:"Facebook"}));
-stockApp.stocksDropDownList.add(new stockApp.stocksDropDownModel({key: "YHOO", value:"Yahoo"}));
-stockApp.stocksDropDownList.add(new stockApp.stocksDropDownModel({key: "GOOGL", value:"Google"}));
-stockApp.stocksDropDownList.add(new stockApp.stocksDropDownModel({key: "MSFT", value:"Microsoft"}));
-stockApp.stocksDropDownList.add(new stockApp.stocksDropDownModel({key: "AMZN", value:"Amazon"}));

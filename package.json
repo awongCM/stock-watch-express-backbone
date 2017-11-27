@@ -29,6 +29,7 @@
     "express": "^4.13.4",
     "fast-csv": "^2.4.0",
     "fs": "0.0.1-security",
+    "js-yaml": "^3.10.0",
     "method-override": "^2.3.6",
     "moment": "^2.13.0",
     "mongodb": "^2.2.30",

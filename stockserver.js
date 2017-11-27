@@ -12,8 +12,23 @@ const express = require('express'),
       moment = require('moment'),
       mongoose = require('mongoose'),
       MongoClient = require('mongodb').MongoClient,
-      Mongonaut = require('mongonaut');
+      Mongonaut = require('mongonaut'),
+      yamlLoader = require('js-yaml'),
+      fs = require('fs');
 
+let config = {};
+
+try {
+  config = yamlLoader.safeLoad(fs.readFileSync('_config.yml', 'utf8'));
+  
+  const indentedJson = JSON.stringify(config, null, 4);
+  console.log(indentedJson);
+
+} catch (error) {
+  console.log(error);
+}
+
+// TODO - to move this into yaml config
 const dbURI = 'mongodb://localhost/stock-watch';
 const mongoStock = new Mongonaut({'db': 'stock-watch','collection': 'stocks'});
 let db;
@@ -84,9 +99,15 @@ MongoClient.connect(dbURI, (err, database) => {
 
 // });
 
+// rendering home page
 app.get('/', (req, res, next) => {
   res.render('index');
-})
+});
+
+// TODO - need to come up with a bettter api end point for dropdowns
+app.get('/api/available-stocks/', (req, res, next) => {
+  res.json({available_stocks: config.STOCKS});
+});
 
 app.get('/api/stocks/', (req, res, next) => {
   let params = {
