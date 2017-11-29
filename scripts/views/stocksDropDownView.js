@@ -14,7 +14,7 @@ var stockApp = stockApp || {};
 		},
 
 		stockNamesSelected: function (e) {
-			var selectedIndex = e.target.options.selectedIndex;
+			let selectedIndex = e.target.options.selectedIndex;
 			console.log("You selected a stock!", e.target.options[selectedIndex].text);
 		},
 
