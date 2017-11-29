@@ -13,8 +13,9 @@ var stockApp = stockApp || {};
 			"change #stock_id": "stockNamesSelected"
 		},
 
-		stockNamesSelected: function () {
-			console.log("You selected a stock!");
+		stockNamesSelected: function (e) {
+			var selectedIndex = e.target.options.selectedIndex;
+			console.log("You selected a stock!", e.target.options[selectedIndex].text);
 		},
 
 		addDropDownOption: function(stocksDropDownModel) {
