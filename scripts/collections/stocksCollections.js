@@ -1,9 +1,9 @@
-// TODO:
+// TODO: - supposed to use this collection for stocks model when making ajax call
 
 // var StocksCollection = Backbone.Collection.extend({
 //
-// 	model: StocksModel,
-// 	url: "http://localhost:8080/wiki-stocks",
+// 	model: {},
+// 	url: "/api/stocks/",
 //
 // 	parse: function(response){
 // 		this.models = response.datasets;
