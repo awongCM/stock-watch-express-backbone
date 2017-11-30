@@ -6,15 +6,29 @@ var stockApp = stockApp || {};
     template: _.template($('#stocksTableView').html()),
     initialize: function () {
         var self = this;
-        this.listenTo(this.model, 'change', this.onModelChange);
+        this.listenTo(this.collection, 'sync', this.onCollectionSync);
 
     },
-    onModelChange: function(model, value) {
-        console.log('detect model changed', model);
-        this.render();
+    onCollectionSync: function(collection, properties) {
+        console.log(`onCollectionSync: ${collection}, ${properties}`);
+        this.renderCollection(properties);
     },
-    render: function() {
-        this.$el.html(this.template(this.model.toJSON()));
+    addRowItem: function(stocksModel) {
+        console.log(`addRowItem: ${stocksModel}`);
+
+        let view = new stockApp.stocksTableRowView({model: stocksModel});
+        $('#table-body').append(view.render().el);
+    },
+
+    emptyRowItems: function () {
+        $('#table-body').empty();
+    },
+
+    renderCollection(properties) {
+        const {title, column_names} = properties;
+
+        this.$el.html(this.template({title: title, column_names: column_names}));
+        stockApp.stocksCollection_instance.each(this.addRowItem, this);
         return this;
     }
   });

@@ -7,5 +7,6 @@ var stockApp  = stockApp || {};
   // TODO use collections for rendering data
   stockApp.stocksModel_instance = new stockApp.stocksModel();
   stockApp.stocksCollection_instance = new stockApp.stocksCollection();
-  new stockApp.stocksTableView({model: stockApp.stocksModel_instance});
+  new stockApp.stocksTableView({collection: stockApp.stocksCollection_instance});
+
 })();

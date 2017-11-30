@@ -35,6 +35,8 @@ html
       .container.table-container#table-container
                             
     //- Underscore Templates
+
+    //- DropDownView Templates
     script#stockNamesDropdownView(type='text/template').
       <label class="label">Available Stocks</label>
       <p class="control">
@@ -45,7 +47,9 @@ html
     
     script#optionitem-template(type="text/template").
       <option value=<%- key %>><%- value %></option>
+    //- end DropDownView Templates
 
+    //- end TableView Templates
     script#stocksTableView(type="text/template").
       <h1 class="title is-4"><%- title %></h1>
       <table class="table">
@@ -67,22 +71,27 @@ html
             <% }); %>
           </tr>
         </tfoot>
-        <tbody>
-          <% _.each(stocks, function(stock) { %> 
-                <tr>
-                  <% _.each(stock, function(val, index) { %> 
-                    <% if (index === 0) { %>
-                      <th><%= val %></th>
-                    <% } else { %>
-                      <td><%= val.toFixed(2) %></td>
-                    <% } %>
-                  <% }); %>
-                </tr>
-            <% }); %>
+        <tbody class="table-body" id="table-body">          
         </tbody>
-      </table>  
-      
-      
+      </table>
+    script#tablerow-template(type="text/template").
+      <tr>
+        <th><%- date %></th>
+        <td><%- open %></td>
+        <td><%- high %></td>
+        <td><%- low %></td>
+        <td><%- close %></td>
+        <td><%- volume %></td>
+        <td><%- ex_dvd %></td>
+        <td><%- split_ratio %></td>
+        <td><%- adj_open %></td>
+        <td><%- adj_high %></td>
+        <td><%- adj_low %></td>
+        <td><%- adj_close %></td>
+        <td><%- adj_vol %></td>
+      </tr>
+    //- end TableView Templates
+
     // Bower Assets
     script(src='bower_components/jquery/dist/jquery.js')
     script(src='bower_components/underscore/underscore-min.js')
@@ -96,6 +105,7 @@ html
     script(src='scripts/collections/stocksCollections.js')
     script(src='scripts/collections/stocksDropDownCollection.js')
     script(src='scripts/views/stocksTableView.js')
+    script(src='scripts/views/stocksTableRowView.js')
     script(src='scripts/views/stocksDropDownView.js')
     script(src='scripts/views/stocksDropDownOptionView.js')
     script(src='scripts/views/stocksFormView.js')

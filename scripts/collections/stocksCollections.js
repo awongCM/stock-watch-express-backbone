@@ -1,19 +1,29 @@
 // TODO: - supposed to use this collection for stocks model when making ajax call
-// var stockApp = stockApp || {};
+var stockApp = stockApp || {};
 
-// stockApp.stocksCollection = Backbone.Collection.extend({
+stockApp.stocksCollection = Backbone.Collection.extend({
 
-// 	model: {},
-// 	url: "/api/stocks/",
+	model: stockApp.stocksModel,
+  url: "/api/stocks/",
+  title: "",
+  column_names: [],
 
-// 	parse: function(response){
-// 		this.models = response.datasets;
-//   },
+	parse: function(response) {
+    this.title = response.title;
+    this.column_names = response.column_names;
+		this.models = response.stocks;
+  },
   
-//   fetch: function() {
-//     console.log("going to fetch api");
-//     this.model = {foo:"foo", bar:"bar"};
-//   }
+  onSuccessHandler: function (collection, response) {
+    console.log('Success response', response);
+    console.log('Success collection', collection);
 
-// });
+  },
+
+  onErrorHandler: function (collection, response) {
+    console.log('Error response', response);
+    console.log('Error collection', collection);
+  }
+  
+});
 
