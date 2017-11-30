@@ -28,11 +28,6 @@ try {
   console.log(error);
 }
 
-// TODO - to move this into yaml config
-const dbURI = 'mongodb://localhost/stock-watch';
-const mongoStock = new Mongonaut({'db': 'stock-watch','collection': 'stocks'});
-let db;
-
 const app = express();
 
 app.set('views', path.join(__dirname, '/views'));
@@ -45,21 +40,16 @@ app.use('/bower_components', express.static(path.join(__dirname , '/bower_compon
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-//Mongoose Events
-mongoose.connect(dbURI);
+//Mongoose Events and configuration
+const dbURI = config.DATABASE_ENV.URI;
+const mongoStock = new Mongonaut({'db': config.DATABASE_ENV.DB,'collection': config.DATABASE_ENV.COLLECTION});
 
-let csvimporturl = './apple-stock.csv';
+//MongooseClient DB instance variable
+let db;
 
-// When successfully connected
-mongoose.connection.on('connected', () => {
-  console.log(`Mongoose default connection open to ${dbURI}`);
-  //import csv here
-  mongoStock.import(csvimporturl).then((response) => {
-    console.log('csv import successful!', response);
-  }).catch((err) => {
-    console.log('Something went wrong with our import process here', err);
-  });
-
+mongoose.connect(dbURI, (err) => {
+  if (err) { console.log(`We couldn\'t connect to MongoDB environment at present: ${err}`);}
+  else  {console.log("Connection successful");}
 });
 
 // If the connection throws an error
@@ -86,7 +76,7 @@ process.on('SIGINT', () => {
 MongoClient.connect(dbURI, (err, database) => {
   if (err) { return console.log(err);}
   db = database;
-})
+});
 
 //TODO - offline access 
 //Fetching from Mongoose side 

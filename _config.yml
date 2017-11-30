@@ -5,3 +5,7 @@ STOCKS:
   - GOOGL: Google
   - MSFT: Microsoft
   - AMZN: Amazon
+DATABASE_ENV:
+  URI: mongodb://localhost/stock-watch
+  DB: stock-watch
+  COLLECTION: collection
