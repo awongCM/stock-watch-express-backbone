@@ -12,15 +12,6 @@ let qsOpts = {
 
 //Timeseries API
 let quandlAPIServerCallTS = {
-  // json: {
-  //   uri: "https://www.quandl.com/api/v3/datasets/WIKI/AAPL.json",
-  //   qs: qsOpts
-  // },
-  // //TODO:
-  // csv : {
-  //   uri: "https://www.quandl.com/api/v3/datasets/WIKI/AAPL.csv",
-  //   qs: qsOpts
-  // },
   default: {
     base: "https://www.quandl.com/api/v3/datasets/WIKI/",
     uri: "",
