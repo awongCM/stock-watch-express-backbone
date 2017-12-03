@@ -30,6 +30,7 @@
     "js-yaml": "^3.10.0",
     "method-override": "^2.3.6",
     "moment": "^2.13.0",
+    "momentjs": "^2.0.0",
     "mongodb": "^2.2.30",
     "mongonaut": "^3.0.0",
     "mongoose": "^4.11.1",
