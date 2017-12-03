@@ -22,51 +22,55 @@ html
                     label.label Order By
                     p.control
                       span.select.is-medium
-                        select(name="download_type")
+                        select(name="order_by" id="order_by")
                           option(value="asc") Ascending
                           option(value="desc") Descending
                   .field
                     label.label Collapse By
                     p.control
                       span.select.is-medium
-                        select(name="download_type")
-                          option(value="json") None
+                        select(name="collapse_by" id="collapse_by")
+                          option(value="none") None
                           option(value="daily") Daily
                           option(value="weekly") Weekly
                           option(value="monthly") Monthly
                           option(value="quarterly") Quarterly
-                          option(value="annual") Annually
-                .field-body
-                  .field
-                    label.label Start Date
-                    .field-body.start-date-select-group
-                      .select
-                        select
-                          option Day
-                          option 1
-                      .select
-                        select
-                          option Month
-                          option Jan
-                      .select
-                        select
-                          option Year
-                          option 2017
-                  .field
-                    label.label End Date
-                    .field-body.end-date-select-group
-                      .select
-                        select
-                          option Day
-                          option 1
-                      .select
-                        select
-                          option Month
-                          option Jan
-                      .select
-                        select
-                          option Year
-                          option 2017
+                          option(value="annual") Annual
+                //- TODO - for dynamically populating date fields
+                //- .field-body
+                //-   - const days = [{id:"", value:"Day"},{id:"01",value:"01"},{id:"02",value:"02"},{id:"03",value:"03"}]
+                //-   - const months = [{id:"", value:"Month"},{id:"01",value:"Jan"},{id:"02",value:"Feb"},{id:"03",value:"Mar"}]
+                //-   - const years = [{id:"", value:"Year"},{id:"2017",value:"2017"},{id:"2016",value:"2016"},{id:"2015",value:"2015"}] 
+                //-   .field
+                //-     label.label Start Date
+                //-     .field-body.start-date-select-group#start-date-select-group
+                //-       .select
+                //-         select(name="day_select")
+                //-           each day in days
+                //-             option(value=(day.id)) #{day.value}
+                //-       .select
+                //-         select(name="month_select")
+                //-           each month in months
+                //-             option(value=(month.id)) #{month.value}
+                //-       .select
+                //-         select(name="year_select")
+                //-           each year in years
+                //-             option(value=(year.id)) #{year.value}
+                //-   .field
+                //-     label.label End Date
+                //-     .field-body.end-date-select-group#end-date-select-group
+                //-       .select
+                //-         select(name="day_select")
+                //-           each day in days
+                //-             option(value=(day.id)) #{day.value}
+                //-       .select
+                //-         select(name="month_select")
+                //-           each month in months
+                //-             option(value=(month.id)) #{month.value}
+                //-       .select
+                //-         select(name="year_select")
+                //-           each year in years
+                //-             option(value=(year.id)) #{year.value}
                 h2.is-size-3 Options
                 .field-body
                   .field

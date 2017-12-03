@@ -22,9 +22,13 @@ let quandlAPIServerCallTS = {
 
 exports.fetchDataSetByQuery = function(params, callback) {
 
-  const {stock_id, download_type} = params;
+  const {stock_id, download_type, order_by, collapse_by, start_date, end_date} = params;
   
   quandlAPIServerCallTS.default.uri = `${quandlAPIServerCallTS.default.base}/${stock_id}.${download_type}`;
+  quandlAPIServerCallTS.default.qs.order = order_by;
+  quandlAPIServerCallTS.default.qs.collapse = collapse_by;
+  // quandlAPIServerCallTS.default.qs.start_date = start_date;
+  // quandlAPIServerCallTS.default.qs.end_date = end_date;
   
   request.get(quandlAPIServerCallTS.default, (err, response, body) => {
     if(err) {

@@ -103,8 +103,14 @@ app.get('/api/stocks/', (req, res, next) => {
   let params = {
       stock_id: req.query.stock_id,
       download_type: req.query.download_type,
-      is_table: req.query.is_table
+      is_table: req.query.is_table,
+      order_by: req.query.order_by,
+      collapse_by: req.query.collapse_by,
+      start_date: req.query.start_date,
+      end_date: req.query.end_date
   };
+
+  console.log("Incoming params...", params);
 
   quandlAPIServer.fetchDataSetByQuery(params, (err, response, body)=> {
       if (!err && response.statusCode === 200) {
