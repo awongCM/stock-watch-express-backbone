@@ -11,18 +11,71 @@ html
     section.section
       form.container.form-container#form-container
         .field.is-horizontal
-          .field-body
-            #js-stocksdropdown.field
+           .columns
+            .column.is-4#js-stocksdropdown
               // Insert backbone template
-            .field
-              .another-container
-                .field
-                  label.label Download as
-                  p.control
-                    span.select.is-medium
-                      select(name="download_type" id="download_type")
-                        option(value="json") JSON
-                        option(value="csv") CSV
+            .column.is-8
+              .field-container
+                h2.is-size-3 Search Params
+                .field-body
+                  .field
+                    label.label Order By
+                    p.control
+                      span.select.is-medium
+                        select(name="download_type")
+                          option(value="asc") Ascending
+                          option(value="desc") Descending
+                  .field
+                    label.label Collapse By
+                    p.control
+                      span.select.is-medium
+                        select(name="download_type")
+                          option(value="json") None
+                          option(value="daily") Daily
+                          option(value="weekly") Weekly
+                          option(value="monthly") Monthly
+                          option(value="quarterly") Quarterly
+                          option(value="annual") Annually
+                .field-body
+                  .field
+                    label.label Start Date
+                    .field-body.start-date-select-group
+                      .select
+                        select
+                          option Day
+                          option 1
+                      .select
+                        select
+                          option Month
+                          option Jan
+                      .select
+                        select
+                          option Year
+                          option 2017
+                  .field
+                    label.label End Date
+                    .field-body.end-date-select-group
+                      .select
+                        select
+                          option Day
+                          option 1
+                      .select
+                        select
+                          option Month
+                          option Jan
+                      .select
+                        select
+                          option Year
+                          option 2017
+                h2.is-size-3 Options
+                .field-body
+                  .field
+                    label.label Download as
+                    p.control
+                      span.select.is-medium
+                        select(name="download_type" id="download_type")
+                          option(value="json") JSON
+                          option(value="csv") CSV                  
                 .is-divider(data-content='OR')                   
                 .field
                   p.control
@@ -38,6 +91,7 @@ html
 
     //- DropDownView Templates
     script#stockNamesDropdownView(type='text/template').
+      <h1 class="is-size-3">Stock Quotes</h1>
       <label class="label">Available Stocks</label>
       <p class="control">
         <span class="select is-medium">
