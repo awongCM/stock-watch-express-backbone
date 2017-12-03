@@ -9,7 +9,7 @@ const express = require('express'),
       path = require('path'),
       pug = require('pug'),
       quandlAPIServer = require('./quandlAPIServer'),
-      moment = require('moment'),
+      dateUtility = require('./dateUtility'),
       mongoose = require('mongoose'),
       MongoClient = require('mongodb').MongoClient,
       Mongonaut = require('mongonaut'),
@@ -91,6 +91,10 @@ MongoClient.connect(dbURI, (err, database) => {
 
 // rendering home page
 app.get('/', (req, res, next) => {
+  // console.log(dateUtility.getCalendarYears());
+  // console.log(dateUtility.getCalendarMonths());
+  // console.log(dateUtility.getCalendarDays());
+
   res.render('index');
 });
 
