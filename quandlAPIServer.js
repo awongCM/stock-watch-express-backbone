@@ -21,8 +21,10 @@ let quandlAPIServerCallTS = {
 }
 
 exports.fetchDataSetByQuery = function(params, callback) {
+
+  const {stock_id, download_type} = params;
   
-  quandlAPIServerCallTS.default.uri = `${quandlAPIServerCallTS.default.base}/${params.stock_id}.${params.download_type}`;
+  quandlAPIServerCallTS.default.uri = `${quandlAPIServerCallTS.default.base}/${stock_id}.${download_type}`;
   
   request.get(quandlAPIServerCallTS.default, (err, response, body) => {
     if(err) {
