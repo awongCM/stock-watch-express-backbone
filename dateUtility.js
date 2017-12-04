@@ -5,7 +5,7 @@ const moment = require('moment');
 exports.getCalendarYears = function(){
     let total_years = moment().diff(moment([1980]), 'years');
   
-    console.log("Difference in years: ", total_years);
+    // console.log("Difference in years: ", total_years);
     
     let yearsArr = [], currentYear = moment().year();
     while (total_years!==0) {
