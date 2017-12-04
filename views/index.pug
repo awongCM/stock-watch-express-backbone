@@ -83,11 +83,18 @@ html
                           option(value="json") JSON
                           option(value="csv") CSV                  
                 .is-divider(data-content='OR')                   
-                .field
-                  p.control
-                    label.checkbox
-                      input(type='checkbox' name='is_table' id='is_table')
-                      |                         Display them as table
+                .field-body
+                  .field
+                    p.control
+                      label.checkbox
+                        input(type='checkbox' name='is_table' id='is_table')
+                        |     Display them as table
+                  .field
+                    p.control
+                      label.checkbox
+                        input(type='checkbox' name='is_graph' id='is_graph')
+                        |     Display them as graph
+                
         .field
           button.button.is-large.is-primary(type="button" name="submit_button" id="submit_button") Submit
     section.section.section-table
