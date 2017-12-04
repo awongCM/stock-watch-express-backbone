@@ -27,8 +27,8 @@ exports.fetchDataSetByQuery = function(params, callback) {
   quandlAPIServerCallTS.default.uri = `${quandlAPIServerCallTS.default.base}/${stock_id}.${download_type}`;
   quandlAPIServerCallTS.default.qs.order = order_by;
   quandlAPIServerCallTS.default.qs.collapse = collapse_by;
-  // quandlAPIServerCallTS.default.qs.start_date = start_date;
-  // quandlAPIServerCallTS.default.qs.end_date = end_date;
+  quandlAPIServerCallTS.default.qs.start_date = start_date;
+  quandlAPIServerCallTS.default.qs.end_date = end_date;
   
   request.get(quandlAPIServerCallTS.default, (err, response, body) => {
     if(err) {

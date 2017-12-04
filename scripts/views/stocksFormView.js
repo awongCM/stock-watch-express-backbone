@@ -11,20 +11,22 @@ var stockApp = stockApp || {};
 
             let uri = "/api/stocks/";
 
-            // let start_date_day = $('#start-date-select-group [name="day_select"]'),
-            //     start_date_month = $('#start-date-select-group [name="month_select"]'),
-            //     start_date_year = $('#start-date-select-group [name="year_select"]');
+            let start_date_day = $('#start-date-select-group [name="day_select"]'),
+                start_date_month = $('#start-date-select-group [name="month_select"]'),
+                start_date_year = $('#start-date-select-group [name="year_select"]');
 
-            // let end_date_day = $('#end-date-select-group [name="day_select"]'),
-            //     end_date_month = $('#end-date-select-group [name="month_select"]'),
-            //     end_date_year =$('#end-date-select-group [name="year_select"]');
+            let end_date_day = $('#end-date-select-group [name="day_select"]'),
+                end_date_month = $('#end-date-select-group [name="month_select"]'),
+                end_date_year =$('#end-date-select-group [name="year_select"]');
 
             let data = {
                 stock_id: $("#stock_id").val(),
                 download_type: $("#download_type").val(),
                 is_table: $("#is_table").is(":checked"),
                 order_by: $("#order_by").val(),
-                collapse_by: $("#collapse_by").val()
+                collapse_by: $("#collapse_by").val(),
+                start_date: `${start_date_year.val()}-${start_date_month.val()}-${start_date_day.val()}`,
+                end_date: `${end_date_year.val()}-${end_date_month.val()}-${end_date_day.val()}`
             };
 
             if (!data.is_table) {

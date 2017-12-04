@@ -22,7 +22,7 @@ try {
   config = yamlLoader.safeLoad(fs.readFileSync('_config.yml', 'utf8'));
   
   const indentedJson = JSON.stringify(config, null, 4);
-  console.log(indentedJson);
+  // console.log(indentedJson);
 
 } catch (error) {
   console.log(error);
@@ -91,11 +91,7 @@ MongoClient.connect(dbURI, (err, database) => {
 
 // rendering home page
 app.get('/', (req, res, next) => {
-  // console.log(dateUtility.getCalendarYears());
-  // console.log(dateUtility.getCalendarMonths());
-  // console.log(dateUtility.getCalendarDays());
-
-  res.render('index');
+  res.render('index', {years: dateUtility.getCalendarYears() , months: dateUtility.getShortCalendarMonths(), days: dateUtility.getCalendarDays()});
 });
 
 // TODO - need to come up with a bettter api end point for dropdowns

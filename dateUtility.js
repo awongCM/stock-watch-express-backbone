@@ -1,5 +1,3 @@
-// TODO
-
 'use strict';
 
 const moment = require('moment');
@@ -16,11 +14,27 @@ exports.getCalendarYears = function(){
       currentYear--;
     }
     
-    console.log(yearsArr);
+    return yearsArr;
 };
 
 exports.getCalendarMonths = function() {
-   console.log(moment.monthsShort());
+   return moment.monthsShort();
+};
+
+exports.getShortCalendarMonths = function() {
+  let monthsShortArr =  this.getCalendarMonths(),
+      monthsArr = [], month_index = 1, id = "";
+  for (let i = 0; i < monthsShortArr.length; i++) {
+    if (month_index < 10) {
+      id = `0${month_index.toString()}`;
+    }
+    else {
+      id = month_index.toString();
+    }
+    monthsArr.push({id: id, value: monthsShortArr[i]});
+    month_index++;
+  }
+  return monthsArr;
 };
 
 exports.getCalendarDays = function() {
@@ -29,10 +43,9 @@ exports.getCalendarDays = function() {
   let daysArr = [], current = moment().day();
 
   while(daysInMonth) {
-    current++;
     daysArr.push(current);
-    daysInMonth--;
-    
+    current++;
+    daysInMonth--; 
   }
-  console.log(daysArr);
+  return daysArr;
 };
