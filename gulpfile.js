@@ -4,11 +4,16 @@ const gulp = require('gulp');
 const browserSync = require('browser-sync');
 const nodemon = require('gulp-nodemon');
 const sass = require('gulp-sass');
+const del = require('del');
 
-gulp.task('default', ['scripts', 'sass', 'browser-sync'], () => {
+gulp.task('default', ['delete', 'scripts', 'sass', 'browser-sync'], () => {
 	gulp.watch(['./scripts/**/*.js'], ['scripts', 'browser-sync']);
 	gulp.watch(['./sass/main.sass'], ['sass', 'browser-sync']);
 });
+
+gulp.task('delete', () =>
+	del(['./public/*'])
+);
 
 gulp.task('scripts', () => 
 	gulp.src('./scripts/**/*.js')
