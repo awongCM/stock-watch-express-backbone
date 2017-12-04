@@ -42,7 +42,8 @@ var stockApp = stockApp || {};
 
                 // is this the correct way to handle callbacks??
                 stockApp.stocksCollection_instance.fetch({data : data, success: this_instance.onSuccessHandler, error: this_instance.onErrorHandler });
-
+                
+                //TODO - add separate logic for handling graphing information 
             }
         }
 	})
