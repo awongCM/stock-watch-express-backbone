@@ -44,6 +44,10 @@ var stockApp = stockApp || {};
                 stockApp.stocksCollection_instance.fetch({data : data, success: this_instance.onSuccessHandler, error: this_instance.onErrorHandler });
                 
                 //TODO - add separate logic for handling graphing information 
+                // steps to do this: 
+                // 1) Use separate collection object for graph query
+                // 2) then parse response into the correct format that d3 expects
+                // 3) finally let backbone view handle d3 rendering when the sync's completed
             }
         }
 	})
