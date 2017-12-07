@@ -3,106 +3,119 @@
 var stockApp = stockApp || {};
 
 (($) => {
-  stockApp.stocksGraphView = (function(){
-     //required variables
-      var svg, x, y, parseTime, valueline, valueline2, margin, width, height;
+  stockApp.stocksGraphView = Backbone.View.extend({
+    el: "#graph-container",
+    // D3 config properties
+    svg: null, 
+    x: null, 
+    y: null, 
+    parseTime: null, 
+    valueline: 0,
+    valueline2: 0, 
+    margin: 0, 
+    width: 0, 
+    height: 0, 
 
-      function setupd3Config() {
-       // set the dimensions and margins of the graph
-        margin = {top: 20, right: 20, bottom: 30, left: 50};
-        width = 960 - margin.left - margin.right;
-        height = 500 - margin.top - margin.bottom;
+    initialize: function () {
+      var self = this;
+      this.listenTo(this.collection, 'sync', this.onCollectionSync);
+      this.setupD3Config();
+    },
 
-        // parse the date / time
-        parseTime = d3.timeParse("%d-%b-%y");
+    setupD3Config: function() {
 
-        // set the ranges
-        x = d3.scaleTime().range([0, width]);
-        y = d3.scaleLinear().range([height, 0]);
+      var self = this;
 
-        // define the 1st line
-        valueline = d3.line()
-        .x(function(d) { return x(d.date); })
-        .y(function(d) { return y(d.close); });
+      // set the dimensions and margins of the graph
+      this.margin = {top: 20, right: 20, bottom: 30, left: 50};
+      this.width = 960 - this.margin.left - this.margin.right;
+      this.height = 500 - this.margin.top - this.margin.bottom;
 
-        // define the 2nd line
-        valueline2 = d3.line()
-        .x(function(d) { return x(d.date); })
-        .y(function(d) { return y(d.open); });
+      // parse the date / time
+      this.parseTime = d3.timeParse("%Y-%m-%d");
 
-        // append the svg obgect to the body of the page
-        // appends a 'group' element to 'svg'
-        // moves the 'group' element to the top left margin
-        svg = d3.select("#graph-container").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform",
-              "translate(" + margin.left + "," + margin.top + ")");
+      // set the ranges
+      this.x = d3.scaleTime().range([0, this.width]);
+      this.y = d3.scaleLinear().range([this.height, 0]);
 
-      }
+      // define the 1st line
+      this.valueline = d3.line()
+      .x(function(d) { return self.x(d.date); })
+      .y(function(d) { return self.y(d.close); });
 
-    
-      function draw(data) {
+      // define the 2nd line
+      this.valueline2 = d3.line()
+				.x(function(d) { return self.x(d.date); })
+				.y(function(d) { return self.y(d.open); });
 
-          // var data = data[country];
+      // append the svg object to the body of the page
+      // appends a 'group' element to 'svg'
+      // moves the 'group' element to the top left margin
+      this.svg = d3.select("#graph-container").append("svg")
+				.attr("width", this.width + this.margin.left + this.margin.right)
+				.attr("height", this.height + this.margin.top + this.margin.bottom)
+				.append("g")
+				.attr("transform",
+							"translate(" + this.margin.left + "," + this.margin.top + ")");  
+    },
+    drawGraph: function (data) {
+      
+      var self = this;
+				// format the data
+			data.forEach(function(d) {
+					d.date = self.parseTime(d.date);
+					d.close = +d.close;
+					d.open = +d.open;
+			});
 
-          // format the data
-            data.forEach(function(d) {
-              d.date = parseTime(d.date);
-              d.close = +d.close;
-              d.open = +d.open;
-          });
+			// Scale the range of the data
+			this.x.domain(d3.extent(data, function(d) { return d.date; }));
+			this.y.domain([0, d3.max(data, function(d) {
+				return Math.max(d.close, d.open); })]);
 
-          // Scale the range of the data
-          x.domain(d3.extent(data, function(d) { return d.date; }));
-          y.domain([0, d3.max(data, function(d) {
-            return Math.max(d.close, d.open); })]);
+			// Add the valueline path.
+			this.svg.append("path")
+					.data([data])
+					.attr("class", "line")
+					.attr("d", this.valueline);
 
-          // Add the valueline path.
-          svg.append("path")
-              .data([data])
-              .attr("class", "line")
-              .attr("d", valueline);
+			// Add the valueline2 path.
+			this.svg.append("path")
+					.data([data])
+					.attr("class", "line")
+					.style("stroke", "red")
+					.attr("d", this.valueline2);
 
-          // Add the valueline2 path.
-          svg.append("path")
-              .data([data])
-              .attr("class", "line")
-              .style("stroke", "red")
-              .attr("d", valueline2);
+			// Add the X Axis
+			this.svg.append("g")
+					.attr("transform", "translate(0," + this.height + ")")
+					.call(d3.axisBottom(this.x));
 
-          // Add the X Axis
-          svg.append("g")
-              .attr("transform", "translate(0," + height + ")")
-              .call(d3.axisBottom(x));
+			// Add the Y Axis
+			this.svg.append("g")
+					.call(d3.axisLeft(this.y));
+    },
 
-          // Add the Y Axis
-          svg.append("g")
-              .call(d3.axisLeft(y));
-      }
+    emptyGraphContent: function() {
+      this.svg.selectAll("*").remove();  
+    },
 
-      //d3 functions here
+    onCollectionSync: function(collection, properties) {
+			console.log(`onCollectionSync:  `);
+			console.log('....', collection);
+			console.log('....', properties);
 
-      setupd3Config();
+			if(!stockApp.stocksCollection_instance.show_graph) return;
+			this.renderCollection(collection);
+    },
+    renderCollection: function(collection) {
+			var self = this;
+			
+			this.emptyGraphContent();
+			this.drawGraph(collection.d3_data);
 
-      // Get the data via AJAX call any time of data
-
-      // d3.csv("data.csv", function(error, data) {
-      //     if (error) throw error;
-
-      //     // trigger render
-      //     draw(data);
-      // });
-
-      d3.json("data.json", function(error, data) {
-        if (error) throw error;
-
-        // trigger render
-        data = data["StockData"];
-        draw(data);
-    });
-
-  })();
+			return this;
+    }
+  });
 
 })(jQuery);

@@ -23,31 +23,25 @@ var stockApp = stockApp || {};
                 stock_id: $("#stock_id").val(),
                 download_type: $("#download_type").val(),
                 is_table: $("#is_table").is(":checked"),
+                is_graph: $("#is_graph").is(":checked"),
                 order_by: $("#order_by").val(),
                 collapse_by: $("#collapse_by").val(),
                 start_date: `${start_date_year.val()}-${start_date_month.val()}-${start_date_day.val()}`,
                 end_date: `${end_date_year.val()}-${end_date_month.val()}-${end_date_day.val()}`
             };
 
-            if (!data.is_table) {
+            if (!data.is_table && !data.is_graph) {
                 //straight download request
 
                 window.location.href = uri + "?stock_id=" + data.stock_id + "&download_type=" + data.download_type + "&is_table=" + data.is_table + "&order_by=" + data.order_by + "&collapse_by=" + data.collapse_by;
 
             } else {
                 //ajax call with stocksCollection in json
-
                 data.download_type = 'json';
-                var this_instance = stockApp.stocksCollection_instance;
+                stockApp.stocksCollection_instance.show_table = data.is_table;
+                stockApp.stocksCollection_instance.show_graph = data.is_graph;
 
-                // is this the correct way to handle callbacks??
-                stockApp.stocksCollection_instance.fetch({data : data, success: this_instance.onSuccessHandler, error: this_instance.onErrorHandler });
-                
-                //TODO - add separate logic for handling graphing information 
-                // steps to do this: 
-                // 1) Use separate collection object for graph query
-                // 2) then parse response into the correct format that d3 expects
-                // 3) finally let backbone view handle d3 rendering when the sync's completed
+                stockApp.stocksCollection_instance.fetchResults(data);
             }
         }
 	})

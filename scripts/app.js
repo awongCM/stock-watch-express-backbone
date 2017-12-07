@@ -7,5 +7,5 @@ var stockApp  = stockApp || {};
   stockApp.stocksModel_instance = new stockApp.stocksModel();
   stockApp.stocksCollection_instance = new stockApp.stocksCollection();
   new stockApp.stocksTableView({collection: stockApp.stocksCollection_instance});
-
+  new stockApp.stocksGraphView({collection: stockApp.stocksCollection_instance});
 })();
