@@ -11,7 +11,13 @@ var stockApp = stockApp || {};
     },
     onCollectionSync: function(collection, properties) {
         console.log(`onCollectionSync: ${collection}, ${properties}`);
-        if(!stockApp.stocksCollection_instance.show_table) return;
+
+        //empty table content
+        if(!stockApp.stocksCollection_instance.show_table) {
+            $("#table-container").empty();
+            return;
+        }
+        
         this.renderCollection(properties);
     },
     addRowItem: function(stocksModel) {

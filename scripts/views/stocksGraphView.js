@@ -19,7 +19,6 @@ var stockApp = stockApp || {};
     initialize: function () {
       var self = this;
       this.listenTo(this.collection, 'sync', this.onCollectionSync);
-      this.setupD3Config();
     },
 
     setupD3Config: function() {
@@ -50,13 +49,15 @@ var stockApp = stockApp || {};
 
       // append the svg object to the body of the page
       // appends a 'group' element to 'svg'
-      // moves the 'group' element to the top left margin
-      this.svg = d3.select("#graph-container").append("svg")
+			// moves the 'group' element to the top left margin
+			if(this.svg === null) {
+				this.svg = d3.select("#graph-container").append("svg")
 				.attr("width", this.width + this.margin.left + this.margin.right)
 				.attr("height", this.height + this.margin.top + this.margin.bottom)
 				.append("g")
 				.attr("transform",
 							"translate(" + this.margin.left + "," + this.margin.top + ")");  
+			}
     },
     drawGraph: function (data) {
       
@@ -105,15 +106,21 @@ var stockApp = stockApp || {};
 			console.log('....', collection);
 			console.log('....', properties);
 
-			if(!stockApp.stocksCollection_instance.show_graph) return;
+			if(!stockApp.stocksCollection_instance.show_graph) {
+				this.emptyGraphContent();
+				d3.select("svg").remove();
+				this.svg = null;
+				return;
+			}
+			
+			this.setupD3Config();
+			this.emptyGraphContent();
 			this.renderCollection(collection);
     },
     renderCollection: function(collection) {
 			var self = this;
-			
-			this.emptyGraphContent();
-			this.drawGraph(collection.d3_data);
 
+			this.drawGraph(collection.d3_data);
 			return this;
     }
   });
