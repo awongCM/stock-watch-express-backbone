@@ -132,7 +132,8 @@ app.get('/api/stocks/', (req, res, next) => {
         }
 
         if (is_valid_json && display_as_table) {
-          res.json({title: response_data.dataset.name, column_names: response_data.dataset.column_names, stocks: response_data.dataset.data });
+          const { name, column_names, data } = response_data.dataset;
+          res.json({title: name, column_names: column_names, stocks: data });
         } else {
           //handling raw file types from server
           res.setHeader('Content-Disposition', 'attachment; filename='+attachment_prefix+'.'+download_type_suffix);
