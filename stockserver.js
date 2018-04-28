@@ -13,6 +13,7 @@ const express = require('express'),
       mongoose = require('mongoose'),
       MongoClient = require('mongodb').MongoClient,
       Mongonaut = require('mongonaut'),
+      StockModel = require('./models/stock'), //TODO
       config_settings = require('./config');
 
 const app = express();
