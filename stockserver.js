@@ -13,20 +13,7 @@ const express = require('express'),
       mongoose = require('mongoose'),
       MongoClient = require('mongodb').MongoClient,
       Mongonaut = require('mongonaut'),
-      yamlLoader = require('js-yaml'),
-      fs = require('fs');
-
-let config = {};
-
-try {
-  config = yamlLoader.safeLoad(fs.readFileSync('_config.yml', 'utf8'));
-  
-  const indentedJson = JSON.stringify(config, null, 4);
-  // console.log(indentedJson);
-
-} catch (error) {
-  console.log(error);
-}
+      config_settings = require('./config');
 
 const app = express();
 
@@ -41,8 +28,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 //Mongoose Events and configuration
-const dbURI = config.DATABASE_ENV.URI;
-const mongoStock = new Mongonaut({'db': config.DATABASE_ENV.DB,'collection': config.DATABASE_ENV.COLLECTION});
+const dbURI = config_settings.DATABASE_ENV.URI;
+const mongoStock = new Mongonaut({'db': config_settings.DATABASE_ENV.DB,'collection': config_settings.DATABASE_ENV.COLLECTION});
 
 //MongooseClient DB instance variable
 let db;
@@ -78,17 +65,6 @@ MongoClient.connect(dbURI, (err, database) => {
   db = database;
 });
 
-//TODO - offline access 
-//Fetching from Mongoose side 
-
-// app.get('/', function (req, res, next) {
-//   db.collection('stocks').find().toArray(function (err, result) {
-//     if (err) { return console.log(err);}
-//     res.render('index', {title: 'Today\'s stocks for Apple ', stocks: result});
-//   });
-
-// });
-
 // rendering home page
 app.get('/', (req, res, next) => {
   res.render('index', {years: dateUtility.getCalendarYears() , months: dateUtility.getShortCalendarMonths(), days: dateUtility.getCalendarDays()});
@@ -96,7 +72,7 @@ app.get('/', (req, res, next) => {
 
 // TODO - need to come up with a bettter api end point for dropdowns
 app.get('/api/available-stocks/', (req, res, next) => {
-  res.json({available_stocks: config.STOCKS});
+  res.json({available_stocks: config_settings.STOCKS});
 });
 
 app.get('/api/stocks/', (req, res, next) => {
