@@ -32,7 +32,7 @@
     "moment": "^2.13.0",
     "mongodb": "^2.2.30",
     "mongonaut": "^3.0.0",
-    "mongoose": "^4.11.1",
+    "mongoose": "^6.0.4",
     "pug": "^2.0.0-rc.2",
     "quandl": "0.0.6",
     "request": "^2.73.0",
