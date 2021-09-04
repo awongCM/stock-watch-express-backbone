@@ -7,6 +7,6 @@ STOCKS:
   - MSFT: Microsoft
   - AMZN: Amazon
 DATABASE_ENV:
-  URI: mongodb://localhost/stock-watch
+  URI: mongodb://db/stock-watch
   DB: stock-watch
   COLLECTION: collection

@@ -2,13 +2,10 @@
   "name": "stock-watch-express-backbone",
   "version": "0.0.1",
   "description": "Stock Watch App with Backbone/Express",
-  "main": "stockserver.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node stockserver.js",
-    "gulpify": "gulp",
-    "prepare": "npm run snyk-protect",
-    "snyk-protect": "snyk-protect"
+    "start": "node server.js",
+    "gulpify": "gulp"
   },
   "keywords": [
     "backbone",
@@ -34,18 +31,17 @@
     "moment": "^2.13.0",
     "mongodb": "^2.2.30",
     "mongonaut": "^3.0.0",
-    "mongoose": "^6.0.4",
+    "mongoose": "^5.13.7",
     "pug": "^2.0.0-rc.2",
     "quandl": "0.0.6",
     "request": "^2.73.0",
-    "sass": "^1.0.0-beta.1",
-    "@snyk/protect": "latest"
+    "sass": "^1.0.0-beta.1"
   },
   "devDependencies": {
     "backbone-callbacks": "^0.1.7",
     "browser-sync": "^2.18.13",
     "del": "^3.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-nodemon": "^2.2.1",
     "gulp-sass": "^3.1.0"
   },
