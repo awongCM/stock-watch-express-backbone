@@ -29,7 +29,7 @@
     "js-yaml": "^3.13.1",
     "method-override": "^2.3.6",
     "moment": "^2.13.0",
-    "mongodb": "^3.1.13",
+    "mongodb": "^3.6.11",
     "mongonaut": "^3.0.0",
     "mongoose": "^6.0.4",
     "pug": "^3.0.1",
