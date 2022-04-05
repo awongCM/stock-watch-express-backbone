@@ -28,7 +28,7 @@
     "fs": "0.0.1-security",
     "js-yaml": "^3.13.1",
     "method-override": "^2.3.6",
-    "moment": "^2.13.0",
+    "moment": "^2.29.2",
     "mongodb": "^3.1.13",
     "mongonaut": "^3.0.0",
     "mongoose": "^6.0.4",
