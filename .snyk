@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.21.5
+version: v1.25.0
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -26,3 +26,6 @@ patch:
   'npm:request:20160119':
     - quandl > request:
         patched: '2021-09-03T06:07:32.785Z'
+  'npm:qs:20140806':
+    - quandl > request > qs:
+        patched: '2022-10-07T17:09:16.896Z'
