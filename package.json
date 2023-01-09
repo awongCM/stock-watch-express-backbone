@@ -27,7 +27,7 @@
     "fast-csv": "^4.3.6",
     "fs": "0.0.1-security",
     "js-yaml": "^3.13.1",
-    "method-override": "^2.3.6",
+    "method-override": "^3.0.0",
     "moment": "^2.13.0",
     "mongodb": "^3.1.13",
     "mongonaut": "^3.0.0",
