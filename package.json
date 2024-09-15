@@ -35,7 +35,7 @@
     "pug": "^3.0.1",
     "quandl": "0.0.6",
     "request": "^2.73.0",
-    "sass": "^1.22.1"
+    "sass": "^1.32.9"
   },
   "devDependencies": {
     "backbone-callbacks": "^0.1.7",
