@@ -11,9 +11,7 @@ const express = require("express"),
   quandlAPIServer = require("./quandlAPIServer"),
   dateUtility = require("./dateUtility"),
   mongoose = require("mongoose"),
-  MongoClient = require("mongodb").MongoClient,
-  Mongonaut = require("mongonaut"),
-  StockModel = require("./models/stock"), //TODO
+  StockModel = require("./models/stock"), //TODO - migrate to Next.js lib/db.ts
   config_settings = require("./config");
 
 global.TextEncoder = require("util").TextEncoder;
@@ -33,24 +31,15 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//Mongoose Events and configuration
+//Mongoose configuration (consolidated - Mongonaut/MongoClient removed)
 const dbURI = config_settings.DATABASE_ENV.URI;
-const mongoStock = new Mongonaut({
-  db: config_settings.DATABASE_ENV.DB,
-  collection: config_settings.DATABASE_ENV.COLLECTION,
-});
 
-//MongooseClient DB instance variable
-let db;
-
-mongoose.connect(dbURI, (err) => {
-  if (err) {
-    console.log(
-      `We couldn\'t connect to MongoDB environment at present: ${err}`
-    );
-  } else {
-    console.log("Connection successful");
-  }
+mongoose.connect(dbURI, {
+  dbName: config_settings.DATABASE_ENV.DB
+}).then(() => {
+  console.log(`[Mongoose] Connected to ${dbURI}`);
+}).catch((err) => {
+  console.error(`[Mongoose] Connection failed: ${err}`);
 });
 
 // If the connection throws an error
@@ -60,27 +49,14 @@ mongoose.connection.on("error", (err) => {
 
 // When the connection is disconnected
 mongoose.connection.on("disconnected", () => {
-  console.log("Mongoose default connection disconnected");
+  console.log("[Mongoose] Connection disconnected");
 });
 
-// If the Node process ends, close the Mongoose connection
-process.on("SIGINT", () => {
-  console.log("ended");
-
-  mongoose.connection.db.dropDatabase(() => {
-    console.log("db dropped");
-  });
-  mongoose.connection.db.close();
-
+// If the Node process ends, close the Mongoose connection gracefully
+process.on("SIGINT", async () => {
+  console.log("[Mongoose] Closing connection on app termination...");
+  await mongoose.connection.close();
   process.exit(0);
-});
-
-//MongooseClient
-MongoClient.connect(dbURI, (err, database) => {
-  if (err) {
-    return console.log(err);
-  }
-  db = database;
 });
 
 // rendering home page

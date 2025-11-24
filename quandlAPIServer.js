@@ -2,8 +2,11 @@
 
 const request = require('request');
 
+// API key now sourced from environment variable (security best practice)
+const QUANDL_API_KEY = process.env.QUANDL_API_KEY || '_6uS2usoj9fz6kBLWbiw'; // fallback for dev only
+
 let qsOpts = {
-    api_key: '_6uS2usoj9fz6kBLWbiw',
+    api_key: QUANDL_API_KEY,
     order: 'desc',
     collapse: 'quarterly',
     start_date: '1997-01-01',

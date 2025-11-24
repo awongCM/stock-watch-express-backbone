@@ -1,6 +1,9 @@
 node_modules/
 bower_components/
 npm-debug.log
+**__pycache__/
+*.log
+**/__tests__/
 
 # Ignore public folder
 public/

@@ -1,0 +1,8 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/": "pages/index.js",
+  "/api/stocks": "pages/api/stocks.js",
+  "/api/available-stocks": "pages/api/available-stocks.js"
+}

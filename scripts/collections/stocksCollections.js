@@ -21,25 +21,8 @@ stockApp.stocksCollection = Backbone.Collection.extend({
 
   parseD3JSON: function(response) {
     this.d3_title = response.title;
-    this.d3_data = response.stocks.map( (item) => {
-      let data = {};
-      
-      //??
-      data.date = item[0];
-      data.open = item[1];
-      data.high = item[2];
-      data.low = item[3];
-      data.close = item[4];
-      data.volume = item[5];
-      data.ex_dvd = item[6];
-      data.split_ratio = item[7];
-      data.adj_open = item[8];
-      data.adj_high = item[9];
-      data.adj_low = item[10];
-      data.adj_close = item[11];
-      data.adj_vol = item[12];
-
-      return data;
+    this.d3_data = response.stocks.map(function(item) {
+      return stockApp.transform.rowArrayToObject(item);
     });
   },
 
