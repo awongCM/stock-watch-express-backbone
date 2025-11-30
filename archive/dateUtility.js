@@ -1,3 +1,5 @@
+
+// Archive date utility functions, moreover, it's used momentjs library which was defunct back in 2020 thus no longer maintained.
 'use strict';
 
 const moment = require('moment');

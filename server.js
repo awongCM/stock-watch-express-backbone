@@ -3,13 +3,7 @@
 // Express Proxy Server
 const express = require("express"),
   bodyParser = require("body-parser"),
-  methodOverride = require("method-override"),
-  errorHandler = require("error-handler"),
-  https = require("https"),
-  path = require("path"),
-  pug = require("pug"),
   quandlAPIServer = require("./quandlAPIServer"),
-  dateUtility = require("./dateUtility"),
   mongoose = require("mongoose"),
   StockModel = require("./models/stock"), //TODO - migrate to Next.js lib/db.ts
   config_settings = require("./config");
@@ -18,53 +12,45 @@ global.TextEncoder = require("util").TextEncoder;
 
 const app = express();
 
-app.set("views", path.join(__dirname, "/views"));
-app.set("view engine", "pug");
-
-app.use(express.static(path.join(__dirname, "/public")));
-
-app.use(
-  "/bower_components",
-  express.static(path.join(__dirname, "/bower_components"))
-);
+// Front-end (Backbone) assets have been archived into /archive/backbone.
+// Static serving and Pug view engine removed. Backend now exposes only API endpoints.
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//Mongoose configuration (consolidated - Mongonaut/MongoClient removed)
-const dbURI = config_settings.DATABASE_ENV.URI;
+// Mongoose connection only initialized when running the server directly to avoid open handles in tests.
+function initMongoose() {
+  const dbURI = config_settings.DATABASE_ENV.URI;
+  mongoose
+    .connect(dbURI, { dbName: config_settings.DATABASE_ENV.DB })
+    .then(() => {
+      console.log(`[Mongoose] Connected to ${dbURI}`);
+    })
+    .catch((err) => {
+      console.error(`[Mongoose] Connection failed: ${err}`);
+    });
 
-mongoose.connect(dbURI, {
-  dbName: config_settings.DATABASE_ENV.DB
-}).then(() => {
-  console.log(`[Mongoose] Connected to ${dbURI}`);
-}).catch((err) => {
-  console.error(`[Mongoose] Connection failed: ${err}`);
-});
+  mongoose.connection.on("error", (err) => {
+    console.log(`Mongoose default connection error: ${err}`);
+  });
 
-// If the connection throws an error
-mongoose.connection.on("error", (err) => {
-  console.log(`Mongoose default connection error: ${err}`);
-});
+  mongoose.connection.on("disconnected", () => {
+    console.log("[Mongoose] Connection disconnected");
+  });
 
-// When the connection is disconnected
-mongoose.connection.on("disconnected", () => {
-  console.log("[Mongoose] Connection disconnected");
-});
+  process.on("SIGINT", async () => {
+    console.log("[Mongoose] Closing connection on app termination...");
+    await mongoose.connection.close();
+    process.exit(0);
+  });
+}
 
-// If the Node process ends, close the Mongoose connection gracefully
-process.on("SIGINT", async () => {
-  console.log("[Mongoose] Closing connection on app termination...");
-  await mongoose.connection.close();
-  process.exit(0);
-});
-
-// rendering home page
-app.get("/", (req, res, next) => {
-  res.render("index", {
-    years: dateUtility.getCalendarYears(),
-    months: dateUtility.getShortCalendarMonths(),
-    days: dateUtility.getCalendarDays(),
+// Root informational endpoint after Backbone archival
+app.get("/", (req, res) => {
+  res.json({
+    message: "Stock Watch API backend active. Front-end migrated to Next.js (see next-app).",
+    archive: "/archive/backbone",
+    endpoints: ["/api/available-stocks/", "/api/stocks/?stock_id=..."],
   });
 });
 
@@ -137,5 +123,12 @@ app.get("/api/stocks/", (req, res, next) => {
   });
 });
 
-app.listen(8080);
-console.log("Stock Watch API is running on port: 8080");
+// Only start server if run directly (not when imported for tests)
+if (require.main === module) {
+  initMongoose();
+  app.listen(8080, () => {
+    console.log("Stock Watch API is running on port: 8080");
+  });
+}
+
+module.exports = app;
