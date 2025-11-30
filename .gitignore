@@ -20,3 +20,4 @@ next-app/.env*
 next-app/.next/cache
 next-app/.next/server
 next-app/.next/static
+next-app/.next/**

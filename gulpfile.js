@@ -3,7 +3,9 @@
 const gulp = require("gulp");
 const browserSync = require("browser-sync");
 const nodemon = require("gulp-nodemon");
-const sass = require("gulp-sass");
+const gulpSass = require("gulp-sass");
+const dartSass = require("sass");
+const sass = gulpSass(dartSass);
 const del = require("del");
 
 gulp.task("delete", () => del(["./public/*"]));
@@ -28,7 +30,7 @@ gulp.task("nodaemon", () => {
   let started = false;
 
   return nodemon({
-    script: "scripts/app.js",
+    script: "server.js",
   }).on("start", () => {
     if (!started) {
       // don't know what happened here...
