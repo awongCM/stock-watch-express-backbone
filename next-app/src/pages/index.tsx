@@ -23,26 +23,29 @@ function PageInner() {
   return (
     <>
       <Head>
-        <title>Stock Watch - Historical Stock Data Visualization</title>
+        <title>US Stock Market Watch</title>
         <meta
           name="description"
           content="View historical stock prices and charts for major tech stocks including Apple, Google, Microsoft, Amazon, and more."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <main style={{ padding: "1rem", fontFamily: "sans-serif" }}>
-        <h1>Stock Watch (Next.js Migration)</h1>
+      <section className="section section-heading">
+        <div className="container">
+          <h1 className="title is-1">US Stock Market Watch</h1>
+        </div>
+      </section>
+      <section className="section">
         <StockForm onSubmit={(p) => setParams(p)} />
-        <section style={{ marginTop: "2rem" }}>
-          <StockTable
-            data={params.is_table ? data : undefined}
-            loading={isLoading}
-          />
-        </section>
-        <section style={{ marginTop: "2rem" }}>
-          <StockGraph data={data} />
-        </section>
-      </main>
+      </section>
+      <section className="section section-table">
+        <div className="container table-container" id="table-container">
+          {params.is_table && <StockTable data={data} loading={isLoading} />}
+        </div>
+        <div className="container graph-container" id="graph-container">
+          {params.is_graph && <StockGraph data={data} />}
+        </div>
+      </section>
     </>
   );
 }
