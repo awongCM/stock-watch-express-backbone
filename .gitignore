@@ -15,3 +15,8 @@ next-app/.env*
 .env*
 !next-app/.env.example
 !.env.example
+
+# Next.js build outputs
+next-app/.next/cache
+next-app/.next/server
+next-app/.next/static
